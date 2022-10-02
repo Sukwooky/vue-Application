@@ -1,0 +1,22 @@
+$font-size-root: 16px;
+$btn-sizes: (
+    'x-small': 20,
+    'small': 28,
+    'default': 36,
+    'large': 44,
+    'x-large': 52
+);
+
+$headings :  (
+    'h1': (
+      'size': 6rem,
+      'weight': 300,
+      'line-height': 6rem,
+      'letter-spacing': -.015625em,
+      'text-transform': false
+    ),
+    
+);
+
+
+
