@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import {extend, ValidationObserver, ValidationProvider } from "vee-validate"
 import {required, email} from "vee-validate/dist/rules"
 extend("min", (val,params) =>{
@@ -87,9 +89,27 @@ export default {
 
     methods : {
         async submit(){
+
+            // 입력조건 유효성 결과
             const res = this.$refs.observer.validate()
+
+            // 입력조건 유효성 결과 만족시
             if (res) {
-                alert("로그인 프로세스")
+                
+                // 로그인 정보
+                const info = {
+                    email : this.email,
+                    password : this.password
+                };
+
+                await axios.post('/api/user/login', info)
+                    .then(res => {
+                        console.log(res)
+                        this.$router.push('/')
+                    })
+                    .catch(err =>{
+                        console.log(err.message)
+                    })
             }
         }
     }

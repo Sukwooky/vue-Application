@@ -158,6 +158,7 @@ export default {
                     infoEmail : this.$store.state.infoEmail,
                     infoPassword : this.$store.state.infoPassword
                 };
+                console.log(info)
 
                 await axios.post('/api/user/joinform', info)
                     .then(res => {
