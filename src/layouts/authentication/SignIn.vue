@@ -6,8 +6,9 @@
                 <v-card width="460">
                     
                     <v-card-text class="text-center px-12 py-16">
-                        <div class="text-h4 text--primary font-weight-black mb-10">로그인</div>
 
+                        <h1 class="text--primary font-weight-black">로그인</h1>
+                        
                         <ValidationObserver ref="observer" v-slot="{invalid}">
                             <v-form @submit.prevent="submit">
                                 
