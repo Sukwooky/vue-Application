@@ -49,7 +49,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+
+import {mapState} from 'vuex'
 
 import {extend, ValidationObserver, ValidationProvider } from "vee-validate"
 import {required, email} from "vee-validate/dist/rules"
@@ -85,6 +86,10 @@ export default {
       ValidationProvider
     },
 
+    computed : {
+        ...mapState(['isLoginError', 'LoginErrorMsg'])
+    },
+
     methods : {
         async submit(){
 
@@ -95,19 +100,15 @@ export default {
             if (res) {
                 
                 // 로그인 정보
-                const info = {
+                const loginObj = {
                     email : this.email,
                     password : this.password
                 };
-
-                await axios.post('/api/user/login', info)
-                    .then(res => {
-                        console.log(res)
-                        this.$router.push('/')
-                    })
-                    .catch(err =>{
-                        console.log(err.message)
-                    })
+                
+                this.$store.dispatch('login', loginObj)
+                //.then(()=>{
+                //    this.$router.push('/')
+                //})
             }
         }
     }

@@ -2,19 +2,23 @@
       <!--    <v-app-bar v-if="$vuetify.breakpoint.xsOnly"> -->
     <v-app-bar color="blue" dark app>
       <v-app-bar-nav-icon @click="$emit('drawer')"></v-app-bar-nav-icon>
+      <v-toolbar-title>
+        <span class="text-decoration-underline">{{loginName}}</span> 님 환영합니다.
+      </v-toolbar-title>
+
       <v-spacer/>
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-view-module</v-icon>
-      </v-btn>
     </v-app-bar>
 </template>
 
 <script>
-export default {
+import { mapGetters } from 'vuex'
 
+export default {
+  computed : {
+    ...mapGetters({
+      loginName : 'getUserInfo_name'
+    })
+  }
 }
 </script>
 

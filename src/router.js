@@ -4,6 +4,8 @@ import VueRouter from "vue-router"
 const DefaultLayout = () => import("@/layouts/default/index.vue")
 const AuthenticationLayout = () => import("@/layouts/authentication/index.vue")
 const PageLayout = () => import("@/layouts/page/index.vue")
+const MyPageLayout = () => import("@/layouts/mypage/index.vue");
+
 
 // DefaultLayout
 const DashBoard = () => import("./components/DashBoard.vue")
@@ -17,6 +19,14 @@ const InfoSignUp  = () => import("@/layouts/authentication/InfoSignUp.vue");
 
 //PageLayout
 const RestaurantList = () => import("@/layouts/page/RestaurantList.vue")
+
+//MyPageLayout
+const Diary = () => import("@/layouts/mypage/Diary/Diary.vue");
+//MyPageLayout -> Diary
+const DiaryWeight = () => import("@/layouts/mypage/Diary/DiaryWeight.vue");
+
+//MyPageLayout 
+const Report = () => import("@/layouts/mypage/Report/Report.vue");
 
 
 Vue.use(VueRouter)
@@ -66,9 +76,27 @@ const routes = [
                 component : RestaurantList
             }
         ]
-    }
+    },
 
-   
+    {
+        path: "/mypage",
+        component : MyPageLayout,
+        children : [
+            {
+                path : "diary",
+                component : Diary,
+
+            },
+            {
+                path : "diaryWeight",
+                component : DiaryWeight
+            },
+            {
+                path : "report",
+                component : Report
+            },
+        ]
+    }
 ];
 
 const router = new VueRouter({

@@ -11,43 +11,49 @@
                     <ValidationObserver ref="observer" v-slot="{invalid}">
                         <v-form @submit.prevent="submit">
 
-                        <ValidationProvider rules="required|max:10" name="이름" v-slot="{errors}">
-                        <v-text-field v-model="name" label="이름" :counter="10" :error-messages="errors"
-                        prepend-icon="mdi-account-badge" clearable
-                        />
-                        </ValidationProvider>
+                            <ValidationProvider rules="required|max:10" name="이름" v-slot="{errors}">
+                            <v-text-field v-model="name" label="이름" :counter="10" :error-messages="errors"
+                            prepend-icon="mdi-account-badge" clearable
+                            />
+                            </ValidationProvider>
 
-                        <ValidationProvider :rules="{
-                            required : true,
-                            email : true,
-                            }" name="이메일" v-slot="{errors}">
-                            <v-text-field v-model="email" label="이메일" :error-messages="errors"
-                            prepend-icon="mdi-email-outline" clearable 
-                            ></v-text-field>                                    
-                        </ValidationProvider>
+                            <ValidationProvider :rules="{
+                                required : true,
+                                email : true,
+                                }" name="이메일" v-slot="{errors}">
+                                <v-text-field v-model="email" label="이메일" :error-messages="errors"
+                                prepend-icon="mdi-email-outline" clearable 
+                                ></v-text-field>                                    
+                            </ValidationProvider>
 
-                        <ValidationProvider rules="required|min:4" name="비밀번호" v-slot="{errors}">
-                            <v-text-field v-model="password" label="비밀번호" :error-messages="errors"
-                            prepend-icon="mdi-lock-outline" clearable class="mt-4"
-                            :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="passwordShow ? 'text' : 'password'"
-                            @click:append="passwordShow = !passwordShow"></v-text-field>
-                        </ValidationProvider>
+                            <ValidationProvider rules="required|min:4" name="비밀번호" v-slot="{errors}">
+                                <v-text-field v-model="password" label="비밀번호" :error-messages="errors"
+                                prepend-icon="mdi-lock-outline" clearable class="mt-4"
+                                :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="passwordShow ? 'text' : 'password'"
+                                @click:append="passwordShow = !passwordShow"></v-text-field>
+                            </ValidationProvider>
 
-                        <ValidationProvider :rules="{
-                            required : true,
-                            min : 4,
-                            confirmed : '비밀번호'
-                        }" name="비밀번호 확인" v-slot="{errors}">
-                            <v-text-field v-model="cofirm_password" label="비밀번호 확인" :error-messages="errors"
-                            prepend-icon="mdi-lock-outline" clearable class="mt-4"
-                            :append-icon="confirm_passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="confirm_passwordShow ? 'text' : 'password'"
-                            @click:append="confirm_passwordShow = !confirm_passwordShow"></v-text-field>
-                        </ValidationProvider>
+                            <ValidationProvider :rules="{
+                                required : true,
+                                min : 4,
+                                confirmed : '비밀번호'
+                            }" name="비밀번호 확인" v-slot="{errors}">
+                                <v-text-field v-model="cofirm_password" label="비밀번호 확인" :error-messages="errors"
+                                prepend-icon="mdi-lock-outline" clearable class="mt-4"
+                                :append-icon="confirm_passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="confirm_passwordShow ? 'text' : 'password'"
+                                @click:append="confirm_passwordShow = !confirm_passwordShow"></v-text-field>
+                            </ValidationProvider>
                         
-                        <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid">회원가입</v-btn>
+                            <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid">회원가입</v-btn>
 
                         </v-form>
                     </ValidationObserver>
+
+                    <div class="mt-10">
+                        <span> | </span>
+                        <router-link to="/authentication/sign-in" class="text-decoration-none">로그인</router-link>
+                        <span> | </span> 
+                    </div>
                 </v-card-text>
             </v-card>
             
@@ -61,8 +67,8 @@
 </template>
 
 <script>
-const PageTab = () => import("@/components/PageTab.vue");
-const PageButton = () => import("@/components/PageButton.vue");
+const PageTab = () => import("@/components/AuthPageTab.vue");
+const PageButton = () => import("@/components/AuthPageButton.vue");
 
 import axios from 'axios'
 
@@ -171,8 +177,21 @@ export default {
 
                 await axios.post('/api/user/joinform', info)
                     .then(res => {
-                        console.log(res)
-                        this.$router.push('/authentication/sign-in')
+                        if (res.data.success === true){
+                            
+                            console.log(res.data)
+                            //this.$router.push('/authentication/sign-in')
+                        }else{
+                            console.log(res.data.success, res.data.message)
+                            this.isRegisterError = true;
+                            this.RegisterErrorMsg = res.data.message;
+
+                            setTimeout(()=>{
+                                this.isRegisterError = false;
+                                this.RegisterErrorMsg = '';
+                            },5000);
+
+                        }
                     })
                     .catch(err =>{
                         console.log(err.message)

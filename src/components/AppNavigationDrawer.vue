@@ -18,11 +18,11 @@
       <!--drawer 제목, 부제목-->
       <v-list-item>
         <v-list-item-content>
-          <v-list-item-title class="text-h6">
-            Application
+          <v-list-item-title>
+            건강관리 서비스
           </v-list-item-title>
           <v-list-item-subtitle>
-            subtext
+            영양갱
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -88,11 +88,15 @@ export default {
 
       items: [
         { title: 'Dashboard', icon: 'mdi-view-dashboard', to: "/" },
-        
+        { title: '로그인', icon: 'mdi-account-badge', to: "/authentication/sign-in" },
+        { title: '회원가입', icon: 'mdi-apple-finder', to: "/authentication/info-first" },
+        { title: '마이페이지', icon: 'mdi-elephant', items : [
+            { title: "다이어리", icon: 'mdi-heart-box-outline', to: "/mypage/diary" },
+            { title: "리포트", icon: 'mdi-history', to: "/mypage/report" },
+        ]},     
+
         { title: 'Pages', icon: 'mdi-menu', items : [
-            { title: "로그인", icon: 'mdi-account-badge', to: "/authentication/sign-in" },
-            { title: "회원가입" ,  icon: 'mdi-apple-finder', to: "/authentication/info-first"},
-            { title: "RestaurantList", icon: 'mdi-clipboard-list-outline', to: "/page/restaurantList" },
+            { title: "음식점 추천", icon: 'mdi-clipboard-list-outline', to: "/page/restaurantList" },
         ]},        
       ],
     }
