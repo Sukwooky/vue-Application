@@ -14,16 +14,13 @@ export default new Vuetify({
     //    }
     //},
 
-    //theme: {
-    //    themes: {
-    //      light: {
-    //        primary: colors.red.darken1, // #E53935
-    //        secondary: colors.red.lighten4, // #FFCDD2
-    //        accent: colors.indigo.base, // #3F51B5
-    //      },
-    //    },
-    //},
-
+    theme: {
+        themes: {
+          light: {
+            rtrActive : '#ed4215'
+          },
+        },
+    },
     //icons : {
     //  iconfont : 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
     //}

@@ -10,7 +10,10 @@ const DashBoard = () => import("./components/DashBoard.vue")
 
 //AuthenticationLayout
 const SignIn = () => import('@/layouts/authentication/SignIn.vue')
-const Info = () => import("@/layouts/authentication/Info.vue")
+
+const InfoFist = () => import("@/layouts/authentication/InfoFirstIn.vue");
+const InfoSecond = () => import("@/layouts/authentication/InfoSecondIn.vue");
+const InfoSignUp  = () => import("@/layouts/authentication/InfoSignUp.vue");
 
 //PageLayout
 const RestaurantList = () => import("@/layouts/page/RestaurantList.vue")
@@ -36,15 +39,21 @@ const routes = [
         component : AuthenticationLayout,
         children : [
             {
-                path : 'info',
-                component : Info
+                path : 'info-first',
+                component : InfoFist
+            },
+            {  
+                path : 'info-second',
+                component : InfoSecond,
+            },
+            {
+                path : 'info-sign-up',
+                component : InfoSignUp
             },
             {
                 path : "sign-in",
                 component : SignIn
             },
-
-
         ]
     },
 

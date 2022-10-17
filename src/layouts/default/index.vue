@@ -15,8 +15,8 @@
 </template>
 
 <script>
-const DefaultBar = () => import("./AppBar.vue")
-const DefaultNavigationDrawer = () => import("./NavigationDrawer.vue")
+const DefaultBar = () => import("../../components/AppBar.vue")
+const DefaultNavigationDrawer = () => import("../../components/NavigationDrawer.vue")
 
 export default {
     

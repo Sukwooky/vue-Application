@@ -1,58 +1,54 @@
 <template>
-    <v-container class="fill-height">
-        <v-row justify="center">
-            <v-col cols="auto">
-                <v-card width="460">
+    <v-container fluid>
+      
+      <v-card>
+        <v-card-text class="text-center px-12 py-16">
+          <v-tabs v-model="tab" background-color="primary" dark centered>
+              <v-tab v-for="item,index in items" :key="index">
+                {{ item.tab }}
+              </v-tab>
+          </v-tabs>
 
-                    <v-tabs v-model="tab" background-color="primary" dark centered>
-                        <v-tab v-for="item,index in items" :key="index">
-                          {{ item.tab }}
-                        </v-tab>
-                    </v-tabs>
+          <v-tabs-items v-model="tab">
+        
+            <v-tab-item>
+              <v-card>
+                <InfoFirstIn/>
+              </v-card>
+            </v-tab-item>
 
-                    <v-tabs-items v-model="tab">
-                        
-                        <v-tab-item>
-                          <v-card flat>
-                            <InfoFirstIn/>
-                          </v-card>
-                        </v-tab-item>
+            <v-tab-item>
+              <v-card>
+                <InfoSecondIn/>
+              </v-card>
+            </v-tab-item>
 
-                        <v-tab-item>
-                          <v-card flat>
-                            <InfoSecondIn/>
-                          </v-card>
-                        </v-tab-item>
+            <v-tab-item>
+              <v-card>
+                <InfoSignUp/>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
 
-                        <v-tab-item>
-                          <v-card flat>
-                            <InfoSignUp/>
-                          </v-card>
-                        </v-tab-item>
-                    </v-tabs-items>
+        </v-card-text>
+        
+        <v-card-text>
+          <v-row align="center" justify="center" class="mt-4 mb-4">
+        
+            <v-btn @click="backBtn" class="mr-10" color="primary">
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
 
-                    <v-row align="center" justify="center" class="mt-4 mb-4">
+            <v-btn @click="nextBtn" class="ml-10" color="primary">
+              <v-icon>mdi-arrow-right</v-icon>
+            </v-btn>    
+          </v-row>
+        </v-card-text>
 
-                            <v-btn @click="backBtn" class="mr-10" color="primary">
-                              <v-icon>mdi-arrow-left</v-icon>
-                            </v-btn>
+      </v-card>
 
-                            <v-btn @click="nextBtn" class="ml-10" color="primary">
-                              <v-icon>mdi-arrow-right</v-icon>
-                            </v-btn>
-
-                    </v-row>
-                    
-                    <v-card class="text-center">
-                        <div>
-                            <router-link to="/authentication/sign-in" class="text-decoration-none">로그인</router-link>
-                        </div>
-                    </v-card>
-
-                </v-card>
-            </v-col>
-        </v-row>
     </v-container>
+
 </template>
 <script>
 const InfoFirstInVue = () => import('./InfoFirstIn.vue')

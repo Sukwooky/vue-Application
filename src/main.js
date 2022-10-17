@@ -11,6 +11,8 @@ import VueGeolocation from "vue-browser-geolocation"
 
 Vue.config.productionTip = false
 Vue.use(VueGeolocation)
+
+
 new Vue({
   store : store,
   router : router,

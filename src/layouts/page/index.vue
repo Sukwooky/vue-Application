@@ -1,9 +1,9 @@
 <template>
   <v-app>
     
-    <v-app-bar app color="primary" dark>
-        <v-toolbar-title>Page Layout</v-toolbar-title>
-    </v-app-bar>
+    <DefaultBar @drawer="drawer = !drawer"></DefaultBar>
+
+    <DefaultNavigationDrawer v-model="drawer"></DefaultNavigationDrawer>
 
     <v-main>
         <v-container fluid>
@@ -15,8 +15,22 @@
 </template>
 
 <script>
-export default {
+const DefaultBar = () => import("../../components/AppBar.vue")
+const DefaultNavigationDrawer = () => import("../../components/NavigationDrawer.vue")
 
+export default {
+    data () {
+      return {
+
+        drawer : false,
+
+      }
+    },
+
+    components : {
+      "DefaultBar" : DefaultBar,
+      "DefaultNavigationDrawer" : DefaultNavigationDrawer,
+    }
 }
 </script>
 

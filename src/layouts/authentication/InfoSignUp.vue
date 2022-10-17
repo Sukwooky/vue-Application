@@ -1,65 +1,69 @@
 <template>
 
-    <v-container class=" fill-height">
-        <v-row justify="center">
-            <v-col cols="auto">
-                <!--
-                <router-link to="/">
-                    <v-img :src="require('@/assets/logo.png')" width="100" class="mx-auto mb-6" />
-                </router-link>
-                -->
+    <v-container fluid>
 
-                <v-card width="460">
-                    <v-card-text class="text-center px-12 py-16">                        
-                        <ValidationObserver ref="observer" v-slot="{invalid}">
-                            <v-form @submit.prevent="submit">
+        <v-card>
 
-                                <ValidationProvider rules="required|max:10" name="이름" v-slot="{errors}">
-                                  <v-text-field v-model="name" label="이름" :counter="10" :error-messages="errors"
-                                  prepend-icon="mdi-account-badge" clearable
-                                  />
-                                </ValidationProvider>
+            <PageTab/>
 
-                                <ValidationProvider :rules="{
-                                    required : true,
-                                    email : true,
-                                    }" name="이메일" v-slot="{errors}">
-                                    <v-text-field v-model="email" label="이메일" :error-messages="errors"
-                                    prepend-icon="mdi-email-outline" clearable 
-                                    ></v-text-field>                                    
-                                </ValidationProvider>
+            <v-card>
+                <v-card-text class="text-center px-12 py-16">                        
+                    <ValidationObserver ref="observer" v-slot="{invalid}">
+                        <v-form @submit.prevent="submit">
 
-                                <ValidationProvider rules="required|min:4" name="비밀번호" v-slot="{errors}">
-                                    <v-text-field v-model="password" label="비밀번호" :error-messages="errors"
-                                    prepend-icon="mdi-lock-outline" clearable class="mt-4"
-                                    :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="passwordShow ? 'text' : 'password'"
-                                    @click:append="passwordShow = !passwordShow"></v-text-field>
-                                </ValidationProvider>
+                        <ValidationProvider rules="required|max:10" name="이름" v-slot="{errors}">
+                        <v-text-field v-model="name" label="이름" :counter="10" :error-messages="errors"
+                        prepend-icon="mdi-account-badge" clearable
+                        />
+                        </ValidationProvider>
 
-                                <ValidationProvider :rules="{
-                                    required : true,
-                                    min : 4,
-                                    confirmed : '비밀번호'
-                                }" name="비밀번호 확인" v-slot="{errors}">
-                                    <v-text-field v-model="cofirm_password" label="비밀번호 확인" :error-messages="errors"
-                                    prepend-icon="mdi-lock-outline" clearable class="mt-4"
-                                    :append-icon="confirm_passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="confirm_passwordShow ? 'text' : 'password'"
-                                    @click:append="confirm_passwordShow = !confirm_passwordShow"></v-text-field>
-                                </ValidationProvider>
-                                
-                                <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid">회원가입</v-btn>
+                        <ValidationProvider :rules="{
+                            required : true,
+                            email : true,
+                            }" name="이메일" v-slot="{errors}">
+                            <v-text-field v-model="email" label="이메일" :error-messages="errors"
+                            prepend-icon="mdi-email-outline" clearable 
+                            ></v-text-field>                                    
+                        </ValidationProvider>
 
-                            </v-form>
-                        </ValidationObserver>
-                    </v-card-text>
+                        <ValidationProvider rules="required|min:4" name="비밀번호" v-slot="{errors}">
+                            <v-text-field v-model="password" label="비밀번호" :error-messages="errors"
+                            prepend-icon="mdi-lock-outline" clearable class="mt-4"
+                            :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="passwordShow ? 'text' : 'password'"
+                            @click:append="passwordShow = !passwordShow"></v-text-field>
+                        </ValidationProvider>
 
-                </v-card>
-            </v-col>
-        </v-row>
+                        <ValidationProvider :rules="{
+                            required : true,
+                            min : 4,
+                            confirmed : '비밀번호'
+                        }" name="비밀번호 확인" v-slot="{errors}">
+                            <v-text-field v-model="cofirm_password" label="비밀번호 확인" :error-messages="errors"
+                            prepend-icon="mdi-lock-outline" clearable class="mt-4"
+                            :append-icon="confirm_passwordShow ? 'mdi-eye' : 'mdi-eye-off'" :type="confirm_passwordShow ? 'text' : 'password'"
+                            @click:append="confirm_passwordShow = !confirm_passwordShow"></v-text-field>
+                        </ValidationProvider>
+                        
+                        <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid">회원가입</v-btn>
+
+                        </v-form>
+                    </ValidationObserver>
+                </v-card-text>
+            </v-card>
+            
+            
+            <v-divider></v-divider>
+            
+            <PageButton :backURL="backURL" :nextURL="nextURL" />
+
+        </v-card>
     </v-container>
 </template>
 
 <script>
+const PageTab = () => import("@/components/PageTab.vue");
+const PageButton = () => import("@/components/PageButton.vue");
+
 import axios from 'axios'
 
 import {extend, ValidationObserver, ValidationProvider } from "vee-validate"
@@ -93,16 +97,26 @@ extend('confirmed', {
 });
 
 export default {
+    components : {      
+        ValidationObserver,
+        ValidationProvider,
+        "PageButton" : PageButton,
+        "PageTab" : PageTab,
+    },
+    
     data(){
         return {
-          //name : this.$store.state.infoName,
-          //email: this.$store.state.infoEmail,
+            //name : this.$store.state.infoName,
+            //email: this.$store.state.infoEmail,
 
-          passwordShow: true,
-          //password: this.$store.state.infoPassword,
+            passwordShow: true,
+            //password: this.$store.state.infoPassword,
 
-          confirm_passwordShow: true,
-          cofirm_password: '',
+            confirm_passwordShow: true,
+            cofirm_password: '',
+
+            backURL : "/authentication/info-second",
+            nextURL : "/authentication/info-sign-up",
         }
     },
 
@@ -132,11 +146,6 @@ export default {
                 this.$store.state.infoPassword = val
             }
         },
-    },
-
-    components : {
-      ValidationObserver,
-      ValidationProvider
     },
 
     methods : {
