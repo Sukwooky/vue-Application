@@ -2,18 +2,11 @@
     <v-row class="mt-3">
           
         <v-col cols="auto">
-            <v-list-item>
-                <v-list-item-content>                        
-                    <v-list-item-title class="">
-                      일일 권장
-                    </v-list-item-title>
-                    <v-list-item-subtitle>{{allKcal}}</v-list-item-subtitle>
-                    <v-list-item-title class="mt-1">
-                      섭취
-                    </v-list-item-title>
-                    <v-list-item-subtitle>{{todayKcal}}</v-list-item-subtitle>
-                </v-list-item-content>
-            </v-list-item>
+            <div>일일 권장</div>
+            <strong class="grey--text">{{allKcal}}kcal</strong>
+
+            <div>섭취</div>
+            <strong class="grey--text">{{todayKcal}}kcal</strong>
         </v-col>
         
         <v-spacer></v-spacer>
@@ -22,8 +15,8 @@
             <v-progress-circular :value="leftPercentKcal" 
             rotate="90" size="100" width="13" color="blue" button>
                 <div class="text-center">
-                    <strong class="black--text">잔여</strong><br>
-                    <strong>{{leftKcal}}kcal</strong>
+                    <strong class="grey--text">잔여</strong><br>
+                    <strong class="grey--text">{{leftKcal}}kcal</strong>
                 </div>
             </v-progress-circular>
         </v-col>

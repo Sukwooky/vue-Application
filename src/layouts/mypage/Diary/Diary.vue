@@ -13,7 +13,9 @@
 
                   <!--Dialog 유발-->
                   <template v-slot:activator="{ on, attrs }">
-                      <v-btn color="blue" dark v-bind="attrs" v-on="on">{{date}}</v-btn>
+                      <v-btn color="blue" dark v-bind="attrs" v-on="on">
+                        {{date}}<v-icon right>mdi-calendar</v-icon>
+                      </v-btn>
                   </template>
 
                   <!--Dialog 내용-->
