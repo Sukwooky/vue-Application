@@ -1,22 +1,37 @@
 <template>
  
   <div>
-    <div>탄수화물 {{todayCarbo}}g / {{allCarbo}}g</div>
-    <v-progress-linear v-model="todayCarbo" color="blue" height="25">
+    <div>
+      탄수화물 <strong class="black--text">{{todayCarbo}}g</strong> / <strong class="grey--text">{{allCarbo}}g</strong>
+      <v-chip v-if="isCarboExcess" class="ma-2" color="red" text-color="white">
+        초과
+      </v-chip>
+    </div>
+    <v-progress-linear :value="todayCarbo" color="blue" height="25">
       <strong>{{ Math.ceil(leftPercentCarbo) }}%</strong>
     </v-progress-linear>
 
     <br>
 
-    <div>단백질 {{todayProtein}}g / {{allProtein}}g</div>
-    <v-progress-linear v-model="todayProtein" color="blue" height="25">
+    <div>
+      단백질 <strong class="black--text">{{todayProtein}}g</strong> / <strong class="grey--text">{{allProtein}}g</strong>
+      <v-chip v-if="isProteinExcess" class="ma-2" color="red" text-color="white">
+        초과
+      </v-chip>
+    </div>
+    <v-progress-linear :value="todayProtein" color="blue" height="25">
       <strong>{{ Math.ceil(leftPercentProtein) }}%</strong>
     </v-progress-linear>
 
     <br>
 
-    <div>지방 {{todayFat}}g / {{allFat}}g</div>
-    <v-progress-linear v-model="todayFat" color="blue" height="25">
+    <div>
+      지방 <strong class="black--text">{{todayFat}}g</strong> / <strong class="grey--text">{{allFat}}g</strong>
+      <v-chip v-if="isFatExcess" class="ma-2" color="red" text-color="white">
+        초과
+      </v-chip>
+    </div>
+    <v-progress-linear :value="todayFat" color="blue" height="25">
       <strong>{{ Math.ceil(leftPercentFat) }}%</strong>
     </v-progress-linear>
   </div>
@@ -34,35 +49,64 @@ export default {
     //mounted(){
     //    axios.get("/api/diary/"+ this.date)
     //    .then(()=>{
-    //
+    //          allCarbo -> Number
+    //          todayCarbo -> Number 
+    //          allProtein -> Number
+    //          todayProtein -> Number   
+    //          allFat -> Number
+    //          todayFat -> Number     
     //    });
     //},
 
     data(){
         return {
             allCarbo: 100,
-            todayCarbo : 50,
+            todayCarbo : 25,
 
             allProtein : 100,
-            todayProtein: 50,
-            
+            todayProtein: 30,
+
             allFat: 100,
-            todayFat: 40
+            todayFat: 200,
         }
     },
 
     computed: {
 
+        isCarboExcess(){
+            return this.allCarbo < this.todayCarbo
+        },
+
         leftPercentCarbo(){
-            return (this.todayCarbo / this.allCarbo) * 100
+            if (this.allCarbo < this.todayCarbo){
+              return 100
+            }else{
+              return (this.todayCarbo / this.allCarbo) * 100
+            }
+        },
+
+        isProteinExcess(){
+            return this.allProtein < this.todayProtein
         },
 
         leftPercentProtein(){
-            return (this.todayProtein / this.allProtein) * 100
+            if (this.allProtein < this.todayProtein){
+              return 100
+            }else{
+              return (this.todayProtein / this.allProtein) * 100
+            }
+        },
+
+        isFatExcess(){
+            return this.allFat < this.todayFat
         },
 
         leftPercentFat(){
-            return (this.todayFat / this.allFat) * 100
+            if(this.allFat < this.todayFat){
+              return 100
+            }else{
+              return (this.todayFat / this.allFat) * 100
+            }
         }
     }
     

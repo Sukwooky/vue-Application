@@ -14,6 +14,7 @@
     "vue": "^2.6.14",
     "vue-browser-geolocation": "^1.8.0",
     "vue-router": "^3.5.3",
+    "vueperslides": "^2.15.3",
     "vuetify": "^2.6.0",
     "vuex": "^3.6.2"
   },

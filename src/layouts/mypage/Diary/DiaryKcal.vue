@@ -3,10 +3,15 @@
           
         <v-col cols="auto">
             <div>일일 권장</div>
-            <strong class="grey--text">{{allKcal}}kcal</strong>
+            <strong class="black--text">{{allKcal}}kcal</strong>
 
-            <div>섭취</div>
-            <strong class="grey--text">{{todayKcal}}kcal</strong>
+            <div>
+                섭취
+                <v-chip v-if="isKcalExcess" class="my-2" color="red" text-color="white">
+                  초과
+                </v-chip>
+            </div>
+            <strong class="black--text">{{todayKcal}}kcal</strong>
         </v-col>
         
         <v-spacer></v-spacer>
@@ -36,20 +41,29 @@ export default {
     //mounted(){
     //    axios.get("/api/diary/"+ this.date)
     //    .then(()=>{
-    //
+    //          allKcal -> Number
+    //          todayKcal -> Number     
     //    });
     //},
 
     data(){
         return {
             allKcal : 2067,
-            todayKcal : 500,
+            todayKcal : 300,
         }
     },
 
     computed: {
+        isKcalExcess(){
+            return this.allKcal < this.todayKcal
+        },
+
         leftKcal(){
-            return this.allKcal - this.todayKcal;
+            if (this.allKcal < this.todayKcal){
+                return 0
+            }else{
+                return this.allKcal - this.todayKcal;
+            }
         },
 
         leftPercentKcal(){

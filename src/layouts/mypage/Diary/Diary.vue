@@ -69,6 +69,10 @@
       </div>
 
       <v-divider></v-divider>
+
+      <div class="mb-3">
+        <DiaryMeal :date="date"/>
+      </div>
       
     </v-container>
 </template>
@@ -76,12 +80,14 @@
 <script>
 const DiaryKcal = () => import("@/layouts/mypage/Diary/DiaryKcal.vue");
 const DiaryNutrient = () => import("@/layouts/mypage/Diary/DiaryNutrient.vue");
+const DiaryMeal = () => import("@/layouts/mypage/Diary/DiaryMeal.vue");
 
 export default {
 
     components : {
       "DiaryKcal" : DiaryKcal,
       "DiaryNutrient" : DiaryNutrient,
+      "DiaryMeal" : DiaryMeal,
     },
 
     data(){

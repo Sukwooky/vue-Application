@@ -1,0 +1,113 @@
+<template>
+    <div>
+        <div class="my-3">
+            <v-row>
+                <v-col cols="auto">
+                    <h3>식사 기록</h3>
+                </v-col>
+                <v-spacer></v-spacer>
+                <v-col cols="auto">
+                    <v-btn dark color="blue" outlined fab>
+                      <v-icon dark>mdi-plus</v-icon>
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </div>
+
+        <div>
+            아침 <strong class="black--text">{{breakfastKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
+        </div>
+        <div>
+            <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
+             :gap="3" :slide-ratio="1 / 4" :dragging-distance="200" :visibleSlides="4">
+                <vueper-slide v-for="food in breakfastArray" :key="food.id" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
+                :style="'color : white'" @click.native="slideClick()"/>  
+            </vueper-slides>  
+        </div>
+
+        <div>
+            점심 <strong class="black--text">{{lunchKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
+        </div>
+        <div>
+            <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
+             :gap="3" :slide-ratio="1 / 4" :dragging-distance="200" :visibleSlides="4">
+                <vueper-slide v-for="food in lunchArray" :key="food.id" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
+                :style="'color : white'" @click.native="slideClick()"/>  
+            </vueper-slides>  
+        </div>
+
+        <div>
+            저녁 <strong class="black--text">{{dinnerKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
+        </div>
+        <div>
+            <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
+             :gap="3" :slide-ratio="1 / 4" :dragging-distance="200" :visibleSlides="4">
+                <vueper-slide v-for="food in dinnerArray" :key="food.id" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
+                :style="'color : white'" @click.native="slideClick()"/>  
+            </vueper-slides>  
+        </div>
+    </div>
+
+</template>
+
+<script>
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
+
+export default {
+    
+    props: {
+        "date" : String,
+    },
+
+    components: { VueperSlides, VueperSlide },
+
+    //mounted(){
+    //    axios.get("/api/diary/"+ this.date)
+    //    .then(()=>{
+    //          breakfastKcal -> Number
+    //          breakfastArray -> Array
+    //
+    //          lunckKcal -> Number    
+    //          lunchArray -> Array
+    //
+    //          dinnerKcal -> Number   
+    //          dinnerArray -> Array  
+    //
+    //          allKcal -> Number      
+    //    });
+    //},
+
+    data(){
+        return {
+
+            breakfastKcal : 50,
+            breakfastArray : [
+                { idx: 0, imgUrl:'jjigae.jpg', kcal: 100}, { idx: 1, imgUrl:'jjigae.jpg', kcal: 90}, { idx: 2, imgUrl:'jjigae.jpg', kcal: 80}, { idx: 3, imgUrl:'sidebar.jpg', kcal: 70}
+            ],
+
+            lunchKcal : 0,
+            lunchArray :  [
+                { idx: 0, imgUrl:'jjigae.jpg', kcal: 60}, { idx: 1, imgUrl:'jjigae.jpg', kcal: 50},
+            ],
+
+            dinnerKcal : 0,
+            dinnerArray :  [
+                { idx: 0, imgUrl:'jjigae.jpg', kcal: 40}
+            ],
+
+            allKcal : 200
+        }
+    },
+
+    methods : {
+        slideClick(){
+            console.log("ㅎㅇ")
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>

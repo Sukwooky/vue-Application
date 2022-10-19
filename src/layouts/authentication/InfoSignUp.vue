@@ -50,9 +50,12 @@
                     </ValidationObserver>
 
                     <div class="mt-10">
-                        <span> | </span>
-                        <router-link to="/authentication/sign-in" class="text-decoration-none">로그인</router-link>
-                        <span> | </span> 
+                        <router-link to="/authentication/info-sign-up" class="text-decoration-none mr-3">
+                            회원가입
+                        </router-link> | 
+                        <router-link to="/authentication/sign-in" class="text-decoration-none ml-3">
+                            로그인
+                        </router-link>
                     </div>
                 </v-card-text>
             </v-card>
