@@ -1,6 +1,8 @@
 <template>
  
   <div>
+
+    <!--탄수화물 제목 / 초과 시 Chip / 그래프 --> 
     <div>
       탄수화물 <strong class="black--text">{{todayCarbo}}g</strong> / <strong class="grey--text">{{allCarbo}}g</strong>
       <v-chip v-if="isCarboExcess" class="ma-2" color="red" text-color="white">
@@ -13,6 +15,7 @@
 
     <br>
 
+    <!--단백질 제목 / 초과 시 Chip / 그래프 --> 
     <div>
       단백질 <strong class="black--text">{{todayProtein}}g</strong> / <strong class="grey--text">{{allProtein}}g</strong>
       <v-chip v-if="isProteinExcess" class="ma-2" color="red" text-color="white">
@@ -25,6 +28,7 @@
 
     <br>
 
+    <!--지방 제목 / 초과 시 Chip / 그래프 --> 
     <div>
       지방 <strong class="black--text">{{todayFat}}g</strong> / <strong class="grey--text">{{allFat}}g</strong>
       <v-chip v-if="isFatExcess" class="ma-2" color="red" text-color="white">

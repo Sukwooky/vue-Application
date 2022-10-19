@@ -29,12 +29,12 @@
                   </v-card>
               </v-dialog>
 
-              <!--Dialog 버튼-->
+              <!--Dialog 왼쪽 버튼-->
               <v-btn @click="minusDate" class="ml-3" color="primary" icon>
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
               
-              <!--Dialog 버튼-->
+              <!--Dialog 오른쪽 버튼-->
               <v-btn @click="plusDate" color="primary" icon>
                 <v-icon>mdi-arrow-right</v-icon>
               </v-btn>
@@ -43,7 +43,7 @@
 
             <v-spacer></v-spacer>
             
-            <!--몸무게-->
+            <!--날짜별 몸무게 입력 버튼-->
             <v-col cols="auto">
                 <v-btn @click="goDiaryWeight" 
                 class="white--text" color="blue" >
@@ -70,6 +70,7 @@
 
       <v-divider></v-divider>
 
+      <!--날짜별 식시기록-->
       <div class="mb-3">
         <DiaryMeal :date="date"/>
       </div>
@@ -143,9 +144,13 @@ export default {
       goDiaryWeight(){
         this.$router.push(
           {
-            path : "/mypage/diaryWeight"
+            name : "DiaryWeight",
+            params : {
+              initDate : this.date,
+              initDateArrayEvents : this.dateArrayEvents
+            }
           }
-        )
+        );
       },
 
     },

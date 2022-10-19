@@ -24,6 +24,7 @@ const RestaurantList = () => import("@/layouts/page/RestaurantList.vue")
 const Diary = () => import("@/layouts/mypage/Diary/Diary.vue");
 //MyPageLayout -> Diary
 const DiaryWeight = () => import("@/layouts/mypage/Diary/DiaryWeight.vue");
+const DiaryRegister = () => import("@/layouts/mypage/Diary/DiaryRegister.vue");
 
 //MyPageLayout 
 const Report = () => import("@/layouts/mypage/Report/Report.vue");
@@ -88,8 +89,15 @@ const routes = [
 
             },
             {
+                name : "DiaryWeight",
                 path : "diaryWeight",
-                component : DiaryWeight
+                component : DiaryWeight,
+                props : true
+            },
+            {
+                name : "DiaryRegister",
+                path : "diaryRegister",
+                component : DiaryRegister
             },
             {
                 path : "report",

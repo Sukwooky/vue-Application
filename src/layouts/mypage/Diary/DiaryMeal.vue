@@ -1,5 +1,7 @@
 <template>
     <div>
+
+        <!--식사기록 제목 및 식사 등록 버튼-->
         <div class="my-3">
             <v-row>
                 <v-col cols="auto">
@@ -7,13 +9,14 @@
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col cols="auto">
-                    <v-btn dark color="blue" outlined fab>
+                    <v-btn dark color="blue" outlined fab @click="goDiaryRegister">
                       <v-icon dark>mdi-plus</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
         </div>
 
+        <!--식사기록 아침-->
         <div>
             아침 <strong class="black--text">{{breakfastKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
         </div>
@@ -25,6 +28,7 @@
             </vueper-slides>  
         </div>
 
+        <!--식사기록 점심-->
         <div>
             점심 <strong class="black--text">{{lunchKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
         </div>
@@ -36,6 +40,7 @@
             </vueper-slides>  
         </div>
 
+        <!--식사기록 저녁-->
         <div>
             저녁 <strong class="black--text">{{dinnerKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
         </div>
@@ -103,7 +108,19 @@ export default {
     methods : {
         slideClick(){
             console.log("ㅎㅇ")
-        }
+        },
+
+        goDiaryRegister(){
+            this.$router.push(
+            {
+                name : "DiaryRegister",
+                params : {
+                initDate : this.date,
+                initDateArrayEvents : this.dateArrayEvents
+                }
+            }
+            );
+        },
     }
 }
 </script>

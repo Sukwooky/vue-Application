@@ -1,6 +1,8 @@
 <template>
     <v-row class="mt-3">
-          
+
+
+        <!--일일 권장 Kcal와 섭취 Kcal--> 
         <v-col cols="auto">
             <div>일일 권장</div>
             <strong class="black--text">{{allKcal}}kcal</strong>
@@ -16,6 +18,7 @@
         
         <v-spacer></v-spacer>
           
+        <!--잔여 Kcal 그래프--> 
         <v-col cols="auto">
             <v-progress-circular :value="leftPercentKcal" 
             rotate="90" size="100" width="13" color="blue" button>
