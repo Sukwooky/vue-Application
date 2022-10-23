@@ -65,8 +65,8 @@
         <ValidationObserver ref="observer" v-slot="{invalid}">
           <v-form @submit.prevent="submit">
             <ValidationProvider rules="required" name="몸무게" v-slot="{errors}">
-              <v-text-field v-model="weight" label="몸무게"  :error-messages="errors"
-              prepend-icon="mdi-account-badge" clearable type="number"/>
+              <v-text-field v-model="weight" label="몸무게" :error-messages="errors"
+              prepend-icon="mdi-account-badge" clearable type="number" suffix="kg"/>
             </ValidationProvider>
 
           <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid">몸무게 등록</v-btn>
@@ -110,6 +110,8 @@ export default {
     },
 
     methods : {
+
+      //event 통해 날짜 할당시 format
       leftPad(value) {
           if (value >= 10) {
               return value;
@@ -118,6 +120,7 @@ export default {
           return `0${value}`;
       },
 
+      //event 통해 날짜 할당시 format
       toStringByFormatting(source, delimiter = '-') {
           const year = source.getFullYear();
           const month = this.leftPad(source.getMonth() + 1);

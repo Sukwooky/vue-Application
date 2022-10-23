@@ -70,7 +70,7 @@
 
       <v-divider></v-divider>
 
-      <!--날짜별 식시기록-->
+      <!--날짜별 식사기록-->
       <div class="mb-3">
         <DiaryMeal :date="date"/>
       </div>
@@ -79,9 +79,9 @@
 </template>
 
 <script>
-const DiaryKcal = () => import("@/layouts/mypage/Diary/DiaryKcal.vue");
-const DiaryNutrient = () => import("@/layouts/mypage/Diary/DiaryNutrient.vue");
-const DiaryMeal = () => import("@/layouts/mypage/Diary/DiaryMeal.vue");
+const DiaryKcal = () => import("@/components/Diary/DiaryKcal.vue");
+const DiaryNutrient = () => import("@/components/Diary/DiaryNutrient.vue");
+const DiaryMeal = () => import("@/components/Diary/DiaryMeal.vue");
 
 export default {
 
@@ -110,6 +110,7 @@ export default {
 
     methods : {
 
+      //event 통해 날짜 할당시 format
       leftPad(value) {
           if (value >= 10) {
               return value;
@@ -118,6 +119,7 @@ export default {
           return `0${value}`;
       },
 
+      //event 통해 날짜 할당시 format
       toStringByFormatting(source, delimiter = '-') {
           const year = source.getFullYear();
           const month = this.leftPad(source.getMonth() + 1);

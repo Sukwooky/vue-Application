@@ -54,11 +54,11 @@
 </template>
 
 <script>
-import KakaoMap from "@/components/map/KakaoMap.vue"
-import RestaurantVue from "@/layouts/page/Restaurant.vue"
+import KakaoMap from "@/components/Map/KakaoMap.vue"
+import RestaurantVue from "@/layouts/Page/Restaurant.vue"
 
-import {MarkerHandler} from "@/components/map/marker-handler.js"
-import {KakaoOverlay} from "@/components/map/overlay-handler.js"
+import {MarkerHandler} from "@/components/Map/marker-handler.js"
+import {KakaoOverlay} from "@/components/Map/overlay-handler.js"
 
 export default {
 

@@ -2,32 +2,32 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 
 const DefaultLayout = () => import("@/layouts/default/index.vue")
-const AuthenticationLayout = () => import("@/layouts/authentication/index.vue")
-const PageLayout = () => import("@/layouts/page/index.vue")
-const MyPageLayout = () => import("@/layouts/mypage/index.vue");
+const AuthenticationLayout = () => import("@/layouts/Auth/index.vue")
+const PageLayout = () => import("@/layouts/Page/index.vue")
+const MyPageLayout = () => import("@/layouts/MyPage/index.vue");
 
 
 // DefaultLayout
 const DashBoard = () => import("./components/DashBoard.vue")
 
 //AuthenticationLayout
-const SignIn = () => import('@/layouts/authentication/SignIn.vue')
+const SignIn = () => import('@/layouts/Auth/SignIn.vue')
 
-const InfoFist = () => import("@/layouts/authentication/InfoFirstIn.vue");
-const InfoSecond = () => import("@/layouts/authentication/InfoSecondIn.vue");
-const InfoSignUp  = () => import("@/layouts/authentication/InfoSignUp.vue");
+const InfoFist = () => import("@/layouts/Auth/InfoFirstIn.vue");
+const InfoSecond = () => import("@/layouts/Auth/InfoSecondIn.vue");
+const InfoSignUp  = () => import("@/layouts/Auth/InfoSignUp.vue");
 
 //PageLayout
-const RestaurantList = () => import("@/layouts/page/RestaurantList.vue")
+const RestaurantList = () => import("@/layouts/Page/RestaurantList.vue")
 
 //MyPageLayout
-const Diary = () => import("@/layouts/mypage/Diary/Diary.vue");
+const Diary = () => import("@/layouts/MyPage/Diary/Diary.vue");
 //MyPageLayout -> Diary
-const DiaryWeight = () => import("@/layouts/mypage/Diary/DiaryWeight.vue");
-const DiaryRegister = () => import("@/layouts/mypage/Diary/DiaryRegister.vue");
+const DiaryWeight = () => import("@/layouts/MyPage/Diary/DiaryWeight.vue");
+const DiaryRegister = () => import("@/layouts/MyPage/Diary/DiaryRegister.vue");
 
 //MyPageLayout 
-const Report = () => import("@/layouts/mypage/Report/Report.vue");
+const Report = () => import("@/layouts/MyPage/Report/Report.vue");
 
 
 Vue.use(VueRouter)

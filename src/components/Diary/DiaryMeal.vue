@@ -18,7 +18,7 @@
 
         <!--식사기록 아침-->
         <div>
-            아침 <strong class="black--text">{{breakfastKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
+            아침 <strong class="black--text">{{breakfastKcal}}kcal</strong> / <strong class="grey--text">{{recommendKcal}}kcal</strong>
         </div>
         <div>
             <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
@@ -30,7 +30,7 @@
 
         <!--식사기록 점심-->
         <div>
-            점심 <strong class="black--text">{{lunchKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
+            점심 <strong class="black--text">{{lunchKcal}}kcal</strong> / <strong class="grey--text">{{recommendKcal}}kcal</strong>
         </div>
         <div>
             <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
@@ -42,7 +42,7 @@
 
         <!--식사기록 저녁-->
         <div>
-            저녁 <strong class="black--text">{{dinnerKcal}}kcal</strong> / <strong class="grey--text">{{allKcal}}kcal</strong>
+            저녁 <strong class="black--text">{{dinnerKcal}}kcal</strong> / <strong class="grey--text">{{recommendKcal}}kcal</strong>
         </div>
         <div>
             <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
@@ -79,29 +79,29 @@ export default {
     //          dinnerKcal -> Number   
     //          dinnerArray -> Array  
     //
-    //          allKcal -> Number      
+    //          recommendKcal -> Number      
     //    });
     //},
 
     data(){
         return {
 
-            breakfastKcal : 50,
+            breakfastKcal : 50,     //사용자의 날짜별 아침 칼로리
             breakfastArray : [
                 { idx: 0, imgUrl:'jjigae.jpg', kcal: 100}, { idx: 1, imgUrl:'jjigae.jpg', kcal: 90}, { idx: 2, imgUrl:'jjigae.jpg', kcal: 80}, { idx: 3, imgUrl:'sidebar.jpg', kcal: 70}
             ],
 
-            lunchKcal : 0,
+            lunchKcal : 0,         //사용자의 날짜별 점심 칼로리
             lunchArray :  [
                 { idx: 0, imgUrl:'jjigae.jpg', kcal: 60}, { idx: 1, imgUrl:'jjigae.jpg', kcal: 50},
             ],
 
-            dinnerKcal : 0,
+            dinnerKcal : 0,        //사용자의 날짜별 저녁 칼로리
             dinnerArray :  [
                 { idx: 0, imgUrl:'jjigae.jpg', kcal: 40}
             ],
 
-            allKcal : 200
+            recommendKcal : 200     
         }
     },
 

@@ -86,8 +86,8 @@
 </template>
 
 <script>
-const PageTab = () => import("@/components/AuthPageTab.vue");
-const PageButton = () => import("@/components/AuthPageButton.vue");
+const PageTab = () => import("@/components/Auth/AuthPageTab.vue");
+const PageButton = () => import("@/components/Auth/AuthPageButton.vue");
 
 export default {
     components : {

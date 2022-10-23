@@ -18,8 +18,8 @@
 </template>
 
 <script>
-const DefaultBar = () => import("../../components/AppBar.vue")
-const DefaultNavigationDrawer = () => import("../../components/AppNavigationDrawer.vue")
+const DefaultBar = () => import("@/components/AppBar.vue");
+const DefaultNavigationDrawer = () => import("@/components/AppNavigationDrawer.vue");
 
 export default {
     data () {
