@@ -49,6 +49,11 @@
                         </v-form>
                     </ValidationObserver>
 
+                    <v-alert :value='isRegisterError' type="error" class="mt-5" 
+                    transition="scale-transition" dense outlined>
+                        {{RegisterErrorMsg}}
+                    </v-alert>
+
                     <div class="mt-10">
                         <router-link to="/authentication/info-sign-up" class="text-decoration-none mr-3">
                             회원가입
@@ -124,6 +129,9 @@ export default {
             confirm_passwordShow: true,
             cofirm_password: '',
 
+            isRegisterError: false,
+            RegisterErrorMsg : '',
+
             backURL : "/authentication/info-second",
             nextURL : "/authentication/info-sign-up",
         }
@@ -180,12 +188,12 @@ export default {
 
                 await axios.post('/api/user/joinform', info)
                     .then(res => {
-                        if (res.data.success === true){
+                        if (res.data.isSuccess === true){
                             
                             console.log(res.data)
                             //this.$router.push('/authentication/sign-in')
                         }else{
-                            console.log(res.data.success, res.data.message)
+                            console.log(res.data.isSuccess, res.data.message)
                             this.isRegisterError = true;
                             this.RegisterErrorMsg = res.data.message;
 

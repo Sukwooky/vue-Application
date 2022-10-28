@@ -73,11 +73,11 @@ export default {
             recommendCarbo : 258,          //일일 권장 탄수화물 양,
             weekCarbo : 272,               //일주일 동안 섭취 탄수화물 양
 
-            recommendProteinPercent : 15,  //일일 권장 단백질
+            recommendProteinPercent : 15,  //일일 권장 단백질 비율
             recommendProtein: 129,         //일일 권장 단백질 양
             weekProtein : 71,              //일주일 동안 섭취 단백질 양
 
-            recommendFatPercent: 26,       //일일 권장 지방
+            recommendFatPercent: 26,       //일일 권장 지방 비율
             recommendFat: 57,              //일일 권장 지방 양
             weekFat : 55,                  //일주일 동안 섭취 지방 양
         }

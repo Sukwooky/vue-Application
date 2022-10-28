@@ -9,7 +9,7 @@
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-col cols="auto">
-                    <v-btn dark color="blue" outlined fab @click="goDiaryRegister">
+                    <v-btn dark color="blue" outlined fab @click="goMealRegister">
                       <v-icon dark>mdi-plus</v-icon>
                     </v-btn>
                 </v-col>
@@ -110,16 +110,47 @@ export default {
             console.log("ㅎㅇ")
         },
 
-        goDiaryRegister(){
+        goMealRegister(){
             this.$router.push(
             {
-                name : "DiaryRegister",
+                name : "MealRegister",
                 params : {
-                initDate : this.date,
-                initDateArrayEvents : this.dateArrayEvents
+                    initDate : this.date,
+                    initMeal : '아침',
+                    initFoods : [{
+                        id : 0,
+                        name : '김치찌개',
+                        imgURL : 'jjigae.jpg',
+                        kcal : 449,
+                        nutrient : {
+                          carbo : 50,
+                          protein : 30,
+                          fat : 30,
+                        }
+                    },{
+                        id : 1,
+                        name : '김밥',
+                        imgURL : 'jjigae.jpg',
+                        kcal : 449,
+                        nutrient : {
+                          carbo : 50,
+                          protein : 30,
+                          fat : 30,
+                        }
+                    },
+                    {
+                        id : 2,
+                        name : '떡볶이',
+                        imgURL : 'jjigae.jpg',
+                        kcal : 449,
+                        nutrient : {
+                          carbo : 50,
+                          protein : 30,
+                          fat : 30,
+                        }
+                    }] 
                 }
-            }
-            );
+            });
         },
     }
 }

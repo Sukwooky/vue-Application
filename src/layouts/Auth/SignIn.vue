@@ -31,7 +31,12 @@
 
                     </v-form>
                 </ValidationObserver>
-                        
+                
+                <v-alert :value='isLoginError' type="error" class="mt-5" 
+                transition="scale-transition" dense outlined>
+                    {{LoginErrorMsg}}
+                </v-alert>        
+
                 <div class="mt-10">
                     <router-link to="/authentication/info-first" class="text-decoration-none mr-3">
                         회원가입

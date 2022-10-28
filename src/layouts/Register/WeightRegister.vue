@@ -1,8 +1,28 @@
 <template>
   <v-container fluid>
 
-      <!--달력, 날짜별 몸무게-->
-      <div class="mb-3">
+      <!--뒤로이동 버튼, 제목 -->
+      <div class="mb-5">
+        <v-row justify="space-between" align="center">
+          
+          <v-col cols="4">
+            <v-btn @click="backDiary" color="blue" outlined>
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+          </v-col>
+          
+          <v-col cols="4">
+            <h3 class="text-center font-weight-medium">몸무게 입력</h3>
+          </v-col>
+          
+          <v-col cols="4">
+            <!--정렬위함-->
+          </v-col>
+        </v-row>
+      </div>
+
+      <!--달력, Dialog 버튼-->
+      <div class="mb-3 mt-3">
           <v-row>
 
             <!--달력-->
@@ -49,14 +69,31 @@
 
       <v-divider></v-divider>
 
-      <!--최대 몸무게 및 최소 몸무게-->
-      <div class="text-center mt-3">
-        <div>
-          <span class="grey--text">MAX</span> <strong class="red--text">{{maxWeight}}kg</strong>
-        </div>
-        <div>
-          <span class="grey--text">MIN</span> <strong class="blue--text">{{minWeight}}kg</strong>
-        </div>
+      <!--최대/최소 몸무게, 입력 몸무게-->
+      <div class="mt-10">
+        <v-row align="center">
+          
+          <v-col cols="auto">
+            <div class="pl-3">
+              <div>
+                <span class="grey--text">MAX</span> <strong class="red--text">{{maxWeight}}kg</strong>
+              </div>
+              <div>
+                <span class="grey--text">MIN</span> <strong class="blue--text">{{minWeight}}kg</strong>
+              </div>
+            </div>
+
+          </v-col>
+
+          <v-spacer></v-spacer>
+          
+          <v-col cols="auto">
+            <h1 class="font-weight-medium">
+              {{displayWeight}} kg
+            </h1>
+          </v-col>
+
+        </v-row>
       </div>
 
       
@@ -102,6 +139,16 @@ export default {
             maxWeight : null,
             minWeight : null,
         }
+    },
+
+    computed: {
+      displayWeight(){
+        if (this.weight === null){
+          return '0.0'
+        }else{
+          return this.weight;
+        }
+      }
     },
 
     mounted () {
@@ -153,7 +200,15 @@ export default {
 
                 console.log(this.weight)
             }
-        }
+      },
+
+      backDiary(){
+        this.$router.push(
+          {
+            name : "Diary",
+          }
+        );
+      },
     }
 
 }

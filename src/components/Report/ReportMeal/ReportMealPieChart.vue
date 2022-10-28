@@ -2,7 +2,6 @@
     <div class="text-center mt-10 border">
         <DoughnutChartGenerator :chart-options="chartOptions" :chart-data="chartData"/>
     </div>
-
 </template>
 
 <script>
@@ -11,10 +10,8 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale} fr
 import chartjsPluginDoughnutlabel from "chartjs-plugin-doughnutlabel-rebourne";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, chartjsPluginDoughnutlabel, ChartDataLabels)
-
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, chartjsPluginDoughnutlabel, ChartDataLabels);
 export default {
-
     props: {
         "dates" : Array,
     },
@@ -24,7 +21,7 @@ export default {
     },
 
     //mounted(){
-    //  
+    //    this.dates[0], this.dates[1]이용
     //
     //    axios.get("/api/report/"+ this.date)
     //    .then(()=>{
@@ -33,17 +30,16 @@ export default {
     //    });
     //},
 
-    data() {
+    data(){
         return {
-
             chartData: {
-                labels: ['탄수화물', '단백질', '지방'],
+                labels: ['아침', '점심', '저녁'],
                 datasets: [
                 {
-                    backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+                    backgroundColor: ['#0095FF', '#80CAFF', '#BFE4FF'],
                     data: [59, 26, 15],
                     
-                    hoverBackgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+                    hoverBackgroundColor: ['#0095FF', '#80CAFF', '#BFE4FF'],
                     //hoverBorderColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'], 
                     hoverBorderWidth : 7,
                     cutout : '50%',
@@ -114,14 +110,14 @@ export default {
                             family : 'Jua',
                             size : 20
                         },
-                        text : '권장 영양소 비율(%)'
+                        text : '삼시세끼 비율(%)'
                     },
 
                     //그래프 안 제목 표시
                     doughnutlabel: {
                         labels: [	
                         {
-                            text: '권장 비율',
+                            text: '세끼 비율',
                             font: {
                                 family : 'Jua',
                                 size: '30',
@@ -129,7 +125,7 @@ export default {
                             }
                         },
                         {
-                            text: '3대 영양소',
+                            text: '아침, 점심, 저녁',
                             font: {
                                 family : 'Jua',
                                 size: '20',
@@ -138,11 +134,12 @@ export default {
                         }],
                     },
                 },
-            }
+            }            
         }
     }
 }
 </script>
+
 <style  scoped>
 .border {
   border: 3px solid ;

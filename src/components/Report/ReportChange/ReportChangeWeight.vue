@@ -28,7 +28,7 @@
     </v-row>
 
     <!--칼로리 그래프-->
-    <div class="px-7 border">
+    <div class="pa-3 border">
       <LineChartGenerator :chart-options="chartOptions" :chart-data="chartData"/>
     </div>
 
@@ -63,7 +63,7 @@ export default {
           labels: ['2022-10-16','2022-10-17','2022-10-18','2022-10-19','2022-10-20','2022-10-21','2022-10-22'],
           datasets: [     
             {
-              label: 'date Kg',
+              label: '몸무게 변화',
 
               backgroundColor: '#1870d5',    //점 색깔
               pointBorderColor: '#1870d5',   //점 주위 색깔
@@ -88,29 +88,6 @@ export default {
               }
   
             },
-            {
-              label: 'today Kg',
-
-              backgroundColor: 'grey', //점 색깔
-              borderColor: 'grey',     //그래프 색깔
-              borderWidth: 1,          //그래프 두께
-              borderDash : [5,5],      //그래프 점선
-
-              data: [70, 70, 70, 70, 70, 70, 70],
-
-              datalabels: {
-                display : true,
-                formatter: function() {
-                  return '';
-                },
-
-                listeners: {
-                  click: (context) => {
-                    this.dateKg = this.chartData.datasets[0].data[context.dataIndex];
-                  }
-                }
-              }
-            }
           ]
       },
       
@@ -131,7 +108,20 @@ export default {
 
             //그래프 종류 표시
             legend: {              
-                display: false,
+                display: true,
+                align : 'end',
+                fullSize : false,
+                labels :{
+                  boxWidth : 10,
+                  font : {
+                    family : 'Jua',
+                    size : 13,
+                  },
+                },
+
+                onClick: () => {
+                  //pass
+                },
             },
 
             //그래프 점 표시
@@ -143,8 +133,8 @@ export default {
                   }
                 },
                 boxWidth: 10,
-                bodyFont: {
-                  size: 14,
+                titleFont: {
+                  size: 13,
                   family : 'Jua'
                 }
             },
@@ -154,7 +144,7 @@ export default {
                 display : true,
                 font : {
                   family : 'Jua',
-                  size : 15
+                  size : 20
                 },
                 text : '몸무게(점 클릭)'
             },
@@ -173,17 +163,33 @@ export default {
           },
 
           y: {
-              min : 0,
+            display : true,
+            min : 0,
 
-              display : true, 
-              ticks: {
-                padding: 10
+            //y축 label 설정
+            ticks: {
+              display : true,
+              font : {
+                family : 'Jua',
+                size : 10,
               },
-              grid: {
-                drawBorder: false,
-                color: "grey",
-                lineWidth: 0.1
-              }
+            },
+
+            grid : {
+              display : true,         //이건 default
+              drawOnChartArea : true, //이건 default
+              drawBorder : false,      
+              drawTicks : true,      
+              color: function(context) {
+                if(context.tick.label === '권장 칼로리'){
+                  return 'black'
+                }else{
+                  return 'rgba(0, 0, 0, 0.1)'
+                }
+              },
+              borderDash : [5,5],
+              lineWidth : 1.5
+            }
           }
         },
       }

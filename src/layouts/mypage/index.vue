@@ -12,6 +12,8 @@
       </v-fade-transition>
       
     </v-main>
+    
+    <DefaultBottomNavigation/>
 
   </v-app>
 
@@ -20,6 +22,7 @@
 <script>
 const DefaultBar = () => import("@/components/AppBar.vue");
 const DefaultNavigationDrawer = () => import("@/components/AppNavigationDrawer.vue");
+const DefaultBottomNavigation = () => import("@/components/AppBottomNavigation.vue");
 
 export default {
     data () {
@@ -33,6 +36,7 @@ export default {
     components : {
       "DefaultBar" : DefaultBar,
       "DefaultNavigationDrawer" : DefaultNavigationDrawer,
+      "DefaultBottomNavigation" : DefaultBottomNavigation,
     }
 }
 </script>

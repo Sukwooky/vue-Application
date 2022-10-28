@@ -71,17 +71,17 @@ export const store = new Vuex.Store({
                 
                 // 로그인 일치 정보 o (success: true, token: token)
                 // 로그인 일치 정보 x (success: false, message)
-                if (res.data.success === true){             // 로그인 일치 정보 o
+                if (res.data.isSuccess === true){             // 로그인 일치 정보 o
                     
                     //1. localStoarge에 token 저장(새로고침 방지)
-                    let token = res.data.token;
-                    localStorage.setItem('access-token', token);
+                    let accessToken = res.data.result.accessToken;
+                    localStorage.setItem('access-token', accessToken);
 
                     //2. getMemberInfo
                     dispatch('getMemberInfo');
 
                 }else{                                     // 로그인 일치 정보 x      
-                    console.log(res.data.success, res.data.message)
+                    console.log(res.data.isSuccess, res.data.code ,res.data.message)
                     
                     this.commit('loginError', res.data.message);
                 }
@@ -117,7 +117,7 @@ export const store = new Vuex.Store({
                     console.log(response.data.success, response.data.user_name)
                     commit('loginSuccess', userInfo)
                 }else{                                  //auth x
-                    console.log(response.data.success, response.data.message);
+
                 }
             })
             .catch(err => {

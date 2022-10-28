@@ -6,13 +6,11 @@
     <DefaultNavigationDrawer v-model="drawer"></DefaultNavigationDrawer>
 
     <v-main>
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+        <v-container fluid>
+            <router-view></router-view>
+        </v-container>
     </v-main>
 
-
-    
   </v-app>
 </template>
 
@@ -21,7 +19,6 @@ const DefaultBar = () => import("@/components/AppBar.vue");
 const DefaultNavigationDrawer = () => import("@/components/AppNavigationDrawer.vue");
 
 export default {
-    
     data () {
       return {
 

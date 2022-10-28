@@ -1,5 +1,5 @@
 <template>
-    <v-row class="mt-3">
+    <v-row class="mt-3" align="center">
 
         <!--일일 권장 Kcal와 섭취 Kcal--> 
         <v-col cols="auto">

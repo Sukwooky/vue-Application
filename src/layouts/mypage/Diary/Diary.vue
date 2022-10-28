@@ -45,7 +45,7 @@
             
             <!--날짜별 몸무게 입력 버튼-->
             <v-col cols="auto">
-                <v-btn @click="goDiaryWeight" 
+                <v-btn @click="goWeightRegister" 
                 class="white--text" color="blue" >
                   kg<v-icon right>mdi-human-child</v-icon>
                 </v-btn>
@@ -143,10 +143,10 @@ export default {
           this.date = this.toStringByFormatting(temp_date);
       },
       
-      goDiaryWeight(){
+      goWeightRegister(){
         this.$router.push(
           {
-            name : "DiaryWeight",
+            name : "WeightRegister",
             params : {
               initDate : this.date,
               initDateArrayEvents : this.dateArrayEvents

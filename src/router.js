@@ -5,6 +5,7 @@ const DefaultLayout = () => import("@/layouts/default/index.vue")
 const AuthenticationLayout = () => import("@/layouts/Auth/index.vue")
 const PageLayout = () => import("@/layouts/Page/index.vue")
 const MyPageLayout = () => import("@/layouts/MyPage/index.vue");
+const RegisterLayout = () => import("@/layouts/Register/index.vue");
 
 
 // DefaultLayout
@@ -22,12 +23,11 @@ const RestaurantList = () => import("@/layouts/Page/RestaurantList.vue")
 
 //MyPageLayout
 const Diary = () => import("@/layouts/MyPage/Diary/Diary.vue");
-//MyPageLayout -> Diary
-const DiaryWeight = () => import("@/layouts/MyPage/Diary/DiaryWeight.vue");
-const DiaryRegister = () => import("@/layouts/MyPage/Diary/DiaryRegister.vue");
-
-//MyPageLayout 
 const Report = () => import("@/layouts/MyPage/Report/Report.vue");
+
+//RegisterLayout
+const WeightRegister = () => import("@/layouts/Register/WeightRegister.vue");
+const MealRegister = () => import("@/layouts/Register/MealRegister.vue");
 
 
 Vue.use(VueRouter)
@@ -83,25 +83,35 @@ const routes = [
         path: "/mypage",
         component : MyPageLayout,
         children : [
-            {
+            {   
+                name : 'Diary',
                 path : "diary",
                 component : Diary,
 
             },
             {
-                name : "DiaryWeight",
-                path : "diaryWeight",
-                component : DiaryWeight,
+                name : 'Report',
+                path : "report",
+                component : Report
+            },
+        ]
+    },
+
+    {
+        path: '/register',
+        component : RegisterLayout,
+        children : [
+            {
+                name : "WeightRegister",
+                path : "weight",
+                component : WeightRegister,
                 props : true
             },
             {
-                name : "DiaryRegister",
-                path : "diaryRegister",
-                component : DiaryRegister
-            },
-            {
-                path : "report",
-                component : Report
+                name : "MealRegister",
+                path : "meal",
+                component : MealRegister,
+                props : true
             },
         ]
     }
