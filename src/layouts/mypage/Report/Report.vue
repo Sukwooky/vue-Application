@@ -34,6 +34,7 @@ const ReportBalance = () => import("@/layouts/MyPage/Report/ReportBalance.vue");
 const ReportMeal = () => import("@/layouts/MyPage/Report/ReportMeal.vue");
 
 export default {
+    name : 'Report',
     data () {
       return {
         tab: null,

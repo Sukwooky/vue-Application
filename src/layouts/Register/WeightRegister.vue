@@ -60,7 +60,7 @@
               </v-btn>
               
               <!--Dialog 오른쪽 버튼-->
-              <v-btn @click="plusDate" color="primary" icon>
+              <v-btn @click="plusDate" color="primary" icon :disabled="computedDisabled">
                 <v-icon>mdi-arrow-right</v-icon>
               </v-btn>
             </v-col>            
@@ -123,7 +123,8 @@ extend('required', {
   message : '해당 필드는 필수값입니다.'
 });
 export default {
-    
+
+    name : 'WeightRegister',
     components : {
       ValidationObserver,
       ValidationProvider,
@@ -147,6 +148,17 @@ export default {
           return '0.0'
         }else{
           return this.weight;
+        }
+      },
+
+      //달력 다음날 이동 버튼 가능여부 
+      computedDisabled(){
+
+        const today = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+        if (this.date === today){
+          return true
+        }else{
+          return false
         }
       }
     },

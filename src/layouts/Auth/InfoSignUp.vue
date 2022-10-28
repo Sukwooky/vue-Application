@@ -111,6 +111,7 @@ extend('confirmed', {
 });
 
 export default {
+    name : "InfoSignUp",
     components : {      
         ValidationObserver,
         ValidationProvider,

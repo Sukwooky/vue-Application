@@ -15,6 +15,7 @@
 
 <script>
   export default {
+    name : "AppBottomNavigation",
     data(){
         return {
           value: null

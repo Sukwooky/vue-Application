@@ -67,9 +67,9 @@ export default {
   mounted(){
 
       //'일주일전' ~ '오늘' 불러오기 (String)
-      let now = new Date();
-      const beforeday = new Date(now.setDate(now.getDate() - 7)).toISOString().substr(0,10);
-      const today = new Date().toISOString().substr(0,10);
+      let now = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000);
+      const beforeday = new Date(now.setDate(now.getDate() - 6)).toISOString().substr(0,10);
+      const today = new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000).toISOString().substr(0,10);
 
       this.dates = [beforeday, today];
   },
@@ -96,14 +96,13 @@ export default {
     //달력 다음날 이동 버튼 가능여부 
     computedDisabled(){
 
-      const today = new Date().toISOString().substr(0,10);
+      const today = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
       if (this.dates[1] === today){
         return true
       }else{
         return false
       }
     }
-
 
   },
 

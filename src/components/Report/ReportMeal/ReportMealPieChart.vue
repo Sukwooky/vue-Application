@@ -12,6 +12,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, chartjsPluginDoughnutlabel, ChartDataLabels);
 export default {
+    name : "ReportMealPieChart",
     props: {
         "dates" : Array,
     },

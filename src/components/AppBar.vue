@@ -14,6 +14,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
+  name : "AppBar",
   computed : {
     ...mapGetters({
       loginName : 'getUserInfo_name'

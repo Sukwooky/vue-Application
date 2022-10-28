@@ -9,7 +9,7 @@
 let kakao = window.kakao
 
 export default {
-
+  name : 'KakaoMap',
   props: ["options"],
 
   data(){

@@ -63,7 +63,7 @@
 
 <script>
 export default {
-
+    name : "ReportMealCheck",
     props: {
         "dates" : Array,
     },
@@ -104,36 +104,37 @@ export default {
                 params : {
                     initDate : date,
                     initMeal : '아침',
+                    initFoodsKcal : 1347,
                     initFoods : [{
                         id : 0,
                         name : '김치찌개',
                         imgURL : 'jjigae.jpg',
-                        kcal : 449,
+                        kcal : 300,
                         nutrient : {
                           carbo : 50,
                           protein : 30,
-                          fat : 30,
+                          fat : 9,
                         }
                     },{
                         id : 1,
                         name : '김밥',
                         imgURL : 'jjigae.jpg',
-                        kcal : 449,
+                        kcal : 200,
                         nutrient : {
-                          carbo : 50,
-                          protein : 30,
-                          fat : 30,
+                          carbo : 40,
+                          protein : 20,
+                          fat : 7,
                         }
                     },
                     {
                         id : 2,
                         name : '떡볶이',
                         imgURL : 'jjigae.jpg',
-                        kcal : 449,
+                        kcal : 100,
                         nutrient : {
-                          carbo : 50,
-                          protein : 30,
-                          fat : 30,
+                          carbo : 30,
+                          protein : 10,
+                          fat : 5,
                         }
                     }] 
                 }

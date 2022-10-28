@@ -46,9 +46,14 @@
 //import axios from "axios
 
 export default {
+    name : 'DiaryNutrient',
     props: {
-        "date" : String,
+        date : {
+            type : String,
+            default : (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        },
     },
+
 
     //mounted(){
     //    axios.get("/api/diary/"+ this.date)

@@ -35,7 +35,7 @@
               </v-btn>
               
               <!--Dialog 오른쪽 버튼-->
-              <v-btn @click="plusDate" color="primary" icon>
+              <v-btn @click="plusDate" color="primary" icon :disabled="computedDisabled">
                 <v-icon>mdi-arrow-right</v-icon>
               </v-btn>
 
@@ -84,11 +84,18 @@ const DiaryNutrient = () => import("@/components/Diary/DiaryNutrient.vue");
 const DiaryMeal = () => import("@/components/Diary/DiaryMeal.vue");
 
 export default {
-
+    name : 'Diary',
     components : {
       "DiaryKcal" : DiaryKcal,
       "DiaryNutrient" : DiaryNutrient,
       "DiaryMeal" : DiaryMeal,
+    },
+
+    mounted () {
+      //2022-09-30 이런식으로 불러오기
+      this.dateArrayEvents = [
+        '2022-10-16','2022-10-17' 
+      ];
     },
 
     data(){
@@ -101,11 +108,18 @@ export default {
         }
     },
 
-    mounted () {
-      //2022-09-30 이런식으로 불러오기
-      this.dateArrayEvents = [
-        '2022-10-16','2022-10-17' 
-      ];
+    computed : {
+      
+      //달력 다음날 이동 버튼 가능여부 
+      computedDisabled(){
+
+        const today = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+        if (this.date === today){
+          return true
+        }else{
+          return false
+        }
+      }
     },
 
     methods : {

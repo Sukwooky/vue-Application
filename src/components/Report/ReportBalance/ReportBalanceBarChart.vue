@@ -16,7 +16,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, ChartDataLabels)
 
 export default {
-
+  name : 'ReportBalanceBarChart',
   components: {
     BarChartGenerator
   },

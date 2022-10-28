@@ -52,7 +52,7 @@
 //import axios from "axios
 
 export default {
-    
+    name : 'ReportBalanceNutrient',
     props: {
         "dates" : Array,
     },

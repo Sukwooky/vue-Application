@@ -82,6 +82,7 @@
 
 <script>
 export default {
+  name : "AppNavigationDrawer",
   data() {
     return {
       gradient: "rgba(0,0,0,0.7), rgba(0,0,0,0.7)",

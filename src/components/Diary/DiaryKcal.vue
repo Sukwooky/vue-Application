@@ -33,9 +33,12 @@
 //import axios from "axios"
 
 export default {
-
+    name : 'DiaryKcal',
     props: {
-        "date" : String,
+        date : {
+            type : String,
+            default : (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)
+        },
     },
 
     //mounted(){

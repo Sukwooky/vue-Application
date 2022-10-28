@@ -90,6 +90,7 @@ const PageTab = () => import("@/components/Auth/AuthPageTab.vue");
 const PageButton = () => import("@/components/Auth/AuthPageButton.vue");
 
 export default {
+    name : "InfoSecondIn",
     components : {
         "PageTab" : PageTab,
         "PageButton" : PageButton

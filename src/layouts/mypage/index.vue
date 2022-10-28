@@ -25,6 +25,7 @@ const DefaultNavigationDrawer = () => import("@/components/AppNavigationDrawer.v
 const DefaultBottomNavigation = () => import("@/components/AppBottomNavigation.vue");
 
 export default {
+    name : "MyPageLayout",
     data () {
       return {
 

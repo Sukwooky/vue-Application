@@ -42,7 +42,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, CategoryScale, PointElement, ChartDataLabels);
 
 export default {
-  
+  name : 'ReportChangeKcal',
   components: {
     LineChartGenerator
   },

@@ -3,31 +3,44 @@
   <v-container fluid>
 
     <!--카메라/갤러리/텍스트 이미지(분석됨) 보기-->
-    <div class="mb-5 border">
+    <div class="mb-5 border-image">
       <v-img :src="cImg" @error="changeNotDefault" 
       height="200px" contain/>
     </div>
 
     <v-divider></v-divider>
 
-    <!--전체 섭취량-->
-    <div class="mt-3">
-      <h2>
-        전체 섭취량 <span class="blue--text font-weight-medium">({{ this.foods[0].kcal }}kcal)</span>
-      </h2>
+    <!--전체 섭취량, 등록할 음식 버튼-->
+    <div class="mt-3 mb-3">
+      <v-row align="center">
+        
+        <!--전체 섭취량-->
+        <v-col cols="auto">
+          <h2>
+            전체 섭취량 <span class="blue--text font-weight-medium">({{ foodsKcal }}kcal)</span>
+          </h2>
+        </v-col>
+          
+        <!--등록할 음식 버튼-->
+        <v-col cols="auto">
+          <v-btn dark color="blue" outlined fab small> 
+            <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
     </div>
 
     <!--날짜선택, 식사 선택(아침/점심/저녁)-->
-    <div class="mt-3 mb-3">
+    <div class="mt-3 mb-8 pa-3 border">
       <v-row align="center">
-
+        
         <!--날짜선택-->
         <v-col cols="auto">
           <v-dialog v-model="dateDialog">
                    
               <!--Dialog 유발-->
               <template v-slot:activator="{ on, attrs }">
-                  <v-chip color="blue" dark v-bind="attrs" v-on="on">
+                  <v-chip color="blue" dark v-bind="attrs" v-on="on" label>
                     {{date}}
                   </v-chip>
               </template>
@@ -49,7 +62,7 @@
               
               <!--Dialog 유발-->
               <template v-slot:activator="{ on, attrs }">
-                <v-chip v-bind="attrs" v-on="on"
+                <v-chip v-bind="attrs" v-on="on" label
                 color="blue" dark>{{meal}}</v-chip>
               </template>
               
@@ -61,8 +74,7 @@
                 
                 <v-divider></v-divider>
                 
-                <v-card-text class="justify-center"
-                style="height: 300px;">
+                <v-card-text class="justify-center" style="height: 300px;">
                   <v-radio-group v-model="meal" column>
                     <v-radio label="아침" value="아침"></v-radio>
                     <v-radio label="점심" value="점심"></v-radio>
@@ -79,29 +91,85 @@
               </v-card>
           </v-dialog>
         </v-col>
-        <v-col cols="auto">
-          <v-btn dark color="blue" outlined fab>
-            <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
-        </v-col>
       </v-row>
     </div>
-    
-    <!--등록할 음식들, 등록한 음식들 영양정보-->
-    <div class="mt-3 mb-3">
-      <v-row align="center" class="border">
-        <v-col cols="auto"  v-for="food in foods" :key="food.id">
-            <v-chip close @click:close="deleteFood(food.id)">{{food.name}}</v-chip>
+
+    <!--영양정보 확인, 등록할 음식들-->
+    <div class="mt-3 mb-8 pa-3 border">
+
+      <!--영양정보 확인-->
+      <v-row align="center" justify="center">
+        <v-col cols="auto">
+          <v-dialog v-model="nutrientDialog" scrollable max-width="300px">
+              <!--Dialog 유발-->
+              <template v-slot:activator="{ on, attrs }">
+                <v-chip v-bind="attrs" v-on="on" label outlined color="blue" dark>
+                  <v-icon left>mdi-flower</v-icon>영양정보<v-icon right>mdi-flower</v-icon>
+                </v-chip>
+              </template>
+              
+              <!--Dialog 내용-->
+              <v-card class="text-center">
+                <v-card-title class="justify-center">
+                  <div>영양 정보</div>
+                </v-card-title>
+                
+                <v-divider></v-divider>
+                
+                <v-card-text class="justify-center" style="height: 300px;">
+                    <!--Tab 선택-->
+                    <v-tabs v-model="nutrientTab" background-color="transparent" color="blue" grow>
+                      <v-tab v-for="tabItem in nutrientTabItems" :key="tabItem.tabIdx">
+                        {{ tabItem.tabName }}
+                      </v-tab>
+                    </v-tabs>
+
+                    <!--Tab 선택시 내용-->
+                    <v-tabs-items v-model="nutrientTab" class="mt-5">
+                      <v-tab-item v-for="tabItem in nutrientTabItems" :key="tabItem.tabIdx">
+                        <div v-if="tabItem.tabIdx === 0">
+                          <NutrientSum :foods="foods" :foodsKcal="foodsKcal"/>
+                        </div>
+                        <div v-else-if="tabItem.tabIdx === 1">
+                          <NutrientDetail :foods="foods" :foodsKcal="foodsKcal"/>
+                        </div>
+                      </v-tab-item>
+                    </v-tabs-items>
+                </v-card-text>
+                
+                <v-divider></v-divider>
+                
+                <v-card-actions class="justify-center">
+                  <v-btn color="blue darken-1" text
+                  @click="nutrientDialog = false">확인</v-btn>
+                </v-card-actions>
+              </v-card>
+          </v-dialog>
+        </v-col>
+      </v-row>
+      
+      <!--등록할 음식들-->
+      <v-row align="center" justify="center">
+        <v-col cols="auto" v-for="food in foods" :key="food.id">
+            <v-chip link close @click:close="deleteFood(food.id)">{{food.name}}</v-chip>
         </v-col>
       </v-row>
     </div>
 
+    <v-divider></v-divider>
+
+    <div>
+      하이
+    </div>
   </v-container>
 
 
 </template>
 
 <script>
+const NutrientSum = () => import("@/components/Register/Meal/NutrientSum.vue");
+const NutrientDetail = () => import("@/components/Register/Meal/NutrientDetail.vue");
+
 export default {
   
   name : 'MealRegister',
@@ -115,6 +183,11 @@ export default {
 
   },
 
+  components : {
+    "NutrientSum" : NutrientSum,
+    "NutrientDetail" : NutrientDetail,
+  },
+
   data(){
     return {
       
@@ -124,6 +197,14 @@ export default {
       meal : this.$route.params.initMeal,
       mealDialog : false,
 
+      nutrientDialog : false,
+      nutrientTab: null,
+      nutrientTabItems : [
+        {tabIdx: 0, tabName : '영양정보 전체'},
+        {tabIdx: 1, tabName : '영양정보 상세'},
+      ],
+
+      foodsKcal : this.$route.params.initFoodsKcal,
       foods : this.$route.params.initFoods,
       
       //이미지 관련
@@ -157,6 +238,12 @@ export default {
 </script>
 <style scoped>
 .border {
-  border: 3px solid ;
+  border: 2px dashed;
+  border-color: #80CAFF;
+
 }
+.border-image{
+  border : 3px solid ;
+}
+
 </style>
