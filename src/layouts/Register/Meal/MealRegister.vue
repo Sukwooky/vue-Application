@@ -192,11 +192,25 @@
     <!--6. 등록-->
     <div class="mt-10">
       <v-form @submit.prevent="submit">
-          <v-btn type="submit" block x-large rounded color="primary">입력 완료</v-btn>
+          <v-btn type="submit"
+          block x-large rounded color="primary">입력 완료</v-btn>
       </v-form>
+      <v-dialog transition="dialog-bottom-transition" max-width="600" v-model="submitDialog">
+        <!--Dialog 내용-->
+          <v-card>
+            <v-card-title class="justify-center error white--text">
+              <v-icon>mdi-alert-decagram</v-icon>  주의  <v-icon>mdi-alert-decagram</v-icon>
+            </v-card-title>
+            <v-card-text class="text-center">
+              <h2 class="pa-12">최소한 1개의 음식은 등록해주세요</h2>
+            </v-card-text>
+            <v-card-actions class="justify-center">
+              <v-btn text @click="submitDialog = false">확인</v-btn>
+            </v-card-actions>
+          </v-card>
+      </v-dialog>
     </div>
   </v-container>
-
 
 </template>
 
@@ -254,6 +268,9 @@ export default {
         { title: '2소접시', ratio : 2},
       ],
 
+      //제출
+      submitDialog : false,
+
       //이미지 관련
       default_img : true,
       rtrimgURL : null,       //s3에 업로드되면 얻기, POST요청 (afas.jpg)
@@ -302,28 +319,38 @@ export default {
 
       async submit(){
         
-        // 섭취 음식 등록 정보
-        const foodObj = {
-            date : this.date,
-            meal : this.meal,
-            foods : this.foods,
-            ratio : this.inputItems[this.inputModel].ratio
-        };
-        console.log(foodObj);
-        
-        await axios.post('/api/foods/join', foodObj)
-          .then(res => {
-              if (res.data.isSuccess === true){
-                  
-                  console.log(res.data)
-                  //this.$router.push('/authentication/sign-in')
-              }else{
-                  console.log(res.data)
-              }
-          })
-          .catch(err =>{
-              console.log(err.message)
-          })
+        //섭취 음식 다 지웠을때X
+        if (this.foods.length !== 0){
+            
+            // 섭취 음식 등록 정보
+            const foodObj = {
+                date : this.date,
+                meal : this.meal,
+                foods : this.foods,
+                ratio : this.inputItems[this.inputModel].ratio
+            };
+            console.log(foodObj);
+
+            await axios.post('/api/foods/join', foodObj)
+              .then(res => {
+                  if (res.data.isSuccess === true){
+
+                      console.log(res.data)
+                      //this.$router.push('/authentication/sign-in')
+                  }else{
+                      console.log(res.data)
+                  }
+              })
+              .catch(err =>{
+                  console.log(err.message)
+              })
+
+        }
+        //섭취 음식 다 지웠을때O    
+        else{        
+          this.submitDialog = true;
+        }
+
       }
   }
 }
