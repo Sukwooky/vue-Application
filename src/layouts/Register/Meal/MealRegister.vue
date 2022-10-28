@@ -2,7 +2,7 @@
   
   <v-container fluid>
 
-    <!--카메라/갤러리/텍스트 이미지(분석됨) 보기-->
+    <!--1. 카메라/갤러리/텍스트 이미지(분석됨) 보기-->
     <div class="mb-5 border-image">
       <v-img :src="cImg" @error="changeNotDefault" 
       height="200px" contain/>
@@ -10,7 +10,7 @@
 
     <v-divider></v-divider>
 
-    <!--전체 섭취량, 등록할 음식 버튼-->
+    <!--2. 전체 섭취량, 등록할 음식 버튼-->
     <div class="mt-3 mb-3">
       <v-row align="center">
         
@@ -30,7 +30,7 @@
       </v-row>
     </div>
 
-    <!--날짜선택, 식사 선택(아침/점심/저녁)-->
+    <!--3. 날짜선택, 식사 선택(아침/점심/저녁)-->
     <div class="mt-3 mb-8 pa-3 border">
       <v-row align="center">
         
@@ -94,13 +94,14 @@
       </v-row>
     </div>
 
-    <!--영양정보 확인, 등록할 음식들-->
+    <!--4. 영양정보 확인, 등록할 음식들-->
     <div class="mt-3 mb-8 pa-3 border">
 
       <!--영양정보 확인-->
       <v-row align="center" justify="center">
         <v-col cols="auto">
           <v-dialog v-model="nutrientDialog" scrollable max-width="300px">
+              
               <!--Dialog 유발-->
               <template v-slot:activator="{ on, attrs }">
                 <v-chip v-bind="attrs" v-on="on" label outlined color="blue" dark>
@@ -158,8 +159,41 @@
 
     <v-divider></v-divider>
 
-    <div>
-      하이
+    <!--5. 입력-->
+    <div class="mt-3 mb-3">
+      
+      <!--입력 제목-->
+      <v-row align="center" class="mb-1">
+        <v-col cols="auto">
+          <h2>비율 입력</h2>
+        </v-col>
+      </v-row>
+      
+      <!--입력-->
+      <v-card class="border" tile>
+        <v-list>
+          <v-list-item-group v-model="inputModel" mandatory color="blue">
+            <v-list-item v-for="(item, i) in inputItems " :key="i" class="mb-2 rounded-pill">
+                                            
+                <v-list-item-title>
+                  <div class="text--primary font-weight-bold mb-2">{{item.title}}</div>
+                </v-list-item-title>
+               
+                <v-list-item-icon>
+                    {{ratioFoodsKcal(item.ratio)}}kcal
+                </v-list-item-icon>  
+                   
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-card>
+    </div>
+
+    <!--6. 등록-->
+    <div class="mt-10">
+      <v-form @submit.prevent="submit">
+          <v-btn type="submit" block x-large rounded color="primary">입력 완료</v-btn>
+      </v-form>
     </div>
   </v-container>
 
@@ -167,6 +201,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 const NutrientSum = () => import("@/components/Register/Meal/NutrientSum.vue");
 const NutrientDetail = () => import("@/components/Register/Meal/NutrientDetail.vue");
 
@@ -186,27 +221,39 @@ export default {
   components : {
     "NutrientSum" : NutrientSum,
     "NutrientDetail" : NutrientDetail,
+
   },
 
   data(){
     return {
       
+      //날짜선택, 식사 선택(아침/점심/저녁)
       date : this.$route.params.initDate,
       dateDialog : false,
 
       meal : this.$route.params.initMeal,
       mealDialog : false,
 
-      nutrientDialog : false,
+      //영양정보 확인, 등록할 음식들
       nutrientTab: null,
       nutrientTabItems : [
         {tabIdx: 0, tabName : '영양정보 전체'},
         {tabIdx: 1, tabName : '영양정보 상세'},
       ],
+      nutrientDialog : false,
 
-      foodsKcal : this.$route.params.initFoodsKcal,
       foods : this.$route.params.initFoods,
       
+      //입력
+      inputModel : 3,
+      inputItems : [
+        { title: '1/4소접시', ratio : 0.25},
+        { title: '1/2소접시', ratio : 0.5},
+        { title: '3/4소접시', ratio : 0.75},
+        { title: '1소접시', ratio : 1},
+        { title: '2소접시', ratio : 2},
+      ],
+
       //이미지 관련
       default_img : true,
       rtrimgURL : null,       //s3에 업로드되면 얻기, POST요청 (afas.jpg)
@@ -214,13 +261,32 @@ export default {
     }
   },
 
-  computed :{
+  computed : {
       
       //default_img = true -> defaultimg
       //default_img = false -> rtrimgPreURL
       cImg(){
           return this.default_img ? require('@/assets/default.png') : this.rtrimgPreURL;
+      },
+
+      foodsKcal(){
+        let sum_kcal = 0
+        for(let i=0; i< this.foods.length; i++){
+          sum_kcal += this.foods[i].kcal;
+        } 
+        return sum_kcal
+      },
+
+      ratioFoodsKcal(){
+        return (ratio) => {
+          let sum_kcal = 0
+          for(let i=0; i< this.foods.length; i++){
+            sum_kcal += this.foods[i].kcal;
+          } 
+          return ratio * sum_kcal;
+        }
       }
+      
   },
 
   methods : {
@@ -232,6 +298,32 @@ export default {
 
       deleteFood(id){
         this.foods.pop(id)
+      },
+
+      async submit(){
+        
+        // 섭취 음식 등록 정보
+        const foodObj = {
+            date : this.date,
+            meal : this.meal,
+            foods : this.foods,
+            ratio : this.inputItems[this.inputModel].ratio
+        };
+        console.log(foodObj);
+        
+        await axios.post('/api/foods/join', foodObj)
+          .then(res => {
+              if (res.data.isSuccess === true){
+                  
+                  console.log(res.data)
+                  //this.$router.push('/authentication/sign-in')
+              }else{
+                  console.log(res.data)
+              }
+          })
+          .catch(err =>{
+              console.log(err.message)
+          })
       }
   }
 }

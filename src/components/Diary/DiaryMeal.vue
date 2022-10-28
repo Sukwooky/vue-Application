@@ -120,7 +120,6 @@ export default {
                 params : {
                     initDate : this.date,
                     initMeal : '아침',
-                    initFoodsKcal : 600,
                     initFoods : [{
                         id : 0,
                         name : '김치찌개',

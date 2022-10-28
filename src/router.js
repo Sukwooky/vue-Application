@@ -5,8 +5,8 @@ const DefaultLayout = () => import("@/layouts/default/index.vue")
 const AuthenticationLayout = () => import("@/layouts/Auth/index.vue")
 const PageLayout = () => import("@/layouts/Page/index.vue")
 const MyPageLayout = () => import("@/layouts/MyPage/index.vue");
-const RegisterLayout = () => import("@/layouts/Register/index.vue");
-
+const WeightRegisterLayout = () => import("@/layouts/Register/Weight/index.vue");
+const MealRegisterLayout  = () => import("@/layouts/Register/Meal/index.vue");
 
 // DefaultLayout
 const DashBoard = () => import("./components/DashBoard.vue")
@@ -25,9 +25,11 @@ const RestaurantList = () => import("@/layouts/Page/RestaurantList.vue")
 const Diary = () => import("@/layouts/MyPage/Diary/Diary.vue");
 const Report = () => import("@/layouts/MyPage/Report/Report.vue");
 
-//RegisterLayout
-const WeightRegister = () => import("@/layouts/Register/WeightRegister.vue");
-const MealRegister = () => import("@/layouts/Register/MealRegister.vue");
+//WeightRegisterLayout
+const WeightRegister = () => import("@/layouts/Register/Weight/WeightRegister.vue");
+
+//MealRegisterLayout
+const MealRegister = () => import("@/layouts/Register/Meal/MealRegister.vue");
 
 
 Vue.use(VueRouter)
@@ -96,20 +98,26 @@ const routes = [
             },
         ]
     },
-
     {
-        path: '/register',
-        component : RegisterLayout,
+        path: '/register/weight',
+        component : WeightRegisterLayout,
         children : [
             {
                 name : "WeightRegister",
-                path : "weight",
+                path : "",
                 component : WeightRegister,
                 props : true
             },
+        ]
+    },
+    {
+        path: '/register/meal',
+        component : MealRegisterLayout,
+        children : [
+
             {
                 name : "MealRegister",
-                path : "meal",
+                path : "",
                 component : MealRegister,
                 props : true
             },
