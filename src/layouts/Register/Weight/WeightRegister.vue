@@ -101,7 +101,7 @@
       <div class="mt-10">
         <ValidationObserver ref="observer" v-slot="{invalid}">
           <v-form @submit.prevent="submit">
-            <ValidationProvider rules="required" name="몸무게" v-slot="{errors}">
+            <ValidationProvider rules="required|numeric" name="몸무게" v-slot="{errors}">
               <v-text-field v-model="weight" label="몸무게" :error-messages="errors"
               prepend-icon="mdi-account-badge" clearable type="number" suffix="kg"/>
             </ValidationProvider>
@@ -116,12 +116,18 @@
 
 <script>
 import {extend, ValidationObserver, ValidationProvider } from "vee-validate"
-import {required} from "vee-validate/dist/rules"
+import {required, numeric} from "vee-validate/dist/rules"
 
 extend('required', {
   ...required,
   message : '해당 필드는 필수값입니다.'
 });
+
+extend('numeric', {
+  ...numeric,
+  message : '해당 필드는 숫자만 입력해야합니다.'
+})
+
 export default {
 
     name : 'WeightRegister',
