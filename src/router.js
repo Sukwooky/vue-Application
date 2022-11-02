@@ -5,6 +5,7 @@ const DefaultLayout = () => import("@/layouts/default/index.vue")
 const AuthenticationLayout = () => import("@/layouts/Auth/index.vue")
 const PageLayout = () => import("@/layouts/Page/index.vue")
 const MyPageLayout = () => import("@/layouts/MyPage/index.vue");
+const ImageRegisterLayout = () => import("@/layouts/Register/Image/index.vue");
 const WeightRegisterLayout = () => import("@/layouts/Register/Weight/index.vue");
 const MealRegisterLayout  = () => import("@/layouts/Register/Meal/index.vue");
 
@@ -24,6 +25,9 @@ const RestaurantList = () => import("@/layouts/Page/RestaurantList.vue")
 //MyPageLayout
 const Diary = () => import("@/layouts/MyPage/Diary/Diary.vue");
 const Report = () => import("@/layouts/MyPage/Report/Report.vue");
+
+//ImageRegisterLayout
+const ImageRegister = () => import("@/layouts/Register/Image/ImageRegister.vue");
 
 //WeightRegisterLayout
 const WeightRegister = () => import("@/layouts/Register/Weight/WeightRegister.vue");
@@ -119,6 +123,19 @@ const routes = [
                 name : "MealRegister",
                 path : "",
                 component : MealRegister,
+                props : true
+            },
+        ]
+    },
+    {
+        path: '/register/image',
+        component : ImageRegisterLayout,
+        children : [
+
+            {
+                name : "ImageRegister",
+                path : "",
+                component : ImageRegister,
                 props : true
             },
         ]

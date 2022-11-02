@@ -116,7 +116,7 @@ export default {
         goMealRegister(){
             this.$router.push(
             {
-                name : "MealRegister",
+                name : "ImageRegister",
                 params : {
                     initDate : this.date,
                     initMeal : '아침',
