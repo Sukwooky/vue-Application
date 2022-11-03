@@ -27,7 +27,8 @@ const Diary = () => import("@/layouts/MyPage/Diary/Diary.vue");
 const Report = () => import("@/layouts/MyPage/Report/Report.vue");
 
 //ImageRegisterLayout
-const ImageRegister = () => import("@/layouts/Register/Image/ImageRegister.vue");
+const MobileRegister = () =>import("@/layouts/Register/Image/MobileRegister.vue");
+const TextRegister = () => import("@/layouts/Register/Image/TextRegister.vue");
 
 //WeightRegisterLayout
 const WeightRegister = () => import("@/layouts/Register/Weight/WeightRegister.vue");
@@ -133,11 +134,18 @@ const routes = [
         children : [
 
             {
-                name : "ImageRegister",
-                path : "",
-                component : ImageRegister,
+                name : "TextRegister",
+                path : "text",
+                component : TextRegister,
                 props : true
             },
+
+            {
+                name : "MobileRegister",
+                path : "mobile",
+                component : MobileRegister,
+                props : true   
+            }
         ]
     }
 ];

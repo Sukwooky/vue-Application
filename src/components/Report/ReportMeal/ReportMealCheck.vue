@@ -19,10 +19,19 @@
                 <v-btn v-if="food.isEaten" icon color="red" x-small>
                   <v-icon>mdi-checkbox-marked</v-icon>
                 </v-btn>
-                <v-btn v-else icon color="blue" x-small
-                @click="goMealRegister(food.date)">
-                  <v-icon>mdi-plus-box-outline</v-icon>
-                </v-btn>
+                <v-menu v-else bottom origin="center center" transition="scale-transition">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn icon color="blue" x-small v-bind="attrs" v-on="on">
+                            <v-icon>mdi-plus-box-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    
+                    <v-list>
+                      <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component, food.date, '아침')">
+                        <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                </v-menu>
             </v-col>            
         </v-row>
 
@@ -35,10 +44,19 @@
                 <v-btn v-if="food.isEaten" icon color="red" x-small>
                   <v-icon>mdi-checkbox-marked</v-icon>
                 </v-btn>
-                <v-btn v-else icon color="blue" x-small
-                @click="goMealRegister(food.date)">
-                  <v-icon>mdi-plus-box-outline</v-icon>
-                </v-btn>
+                <v-menu v-else bottom origin="center center" transition="scale-transition">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn icon color="blue" x-small v-bind="attrs" v-on="on">
+                            <v-icon>mdi-plus-box-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    
+                    <v-list>
+                      <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component, food.date, '점심')">
+                        <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                </v-menu>
             </v-col>            
         </v-row>
 
@@ -51,10 +69,19 @@
                 <v-btn v-if="food.isEaten" icon color="red" x-small>
                   <v-icon>mdi-checkbox-marked</v-icon>
                 </v-btn>
-                <v-btn v-else icon color="blue" x-small 
-                @click="goMealRegister(food.date)">
-                  <v-icon>mdi-plus-box-outline</v-icon>
-                </v-btn>
+                <v-menu v-else bottom origin="center center" transition="scale-transition">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn icon color="blue" x-small v-bind="attrs" v-on="on">
+                            <v-icon>mdi-plus-box-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    
+                    <v-list>
+                      <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component, food.date, '저녁')">
+                        <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+                      </v-list-item>
+                    </v-list>
+                </v-menu>
             </v-col>            
         </v-row>
     </div>
@@ -91,19 +118,23 @@ export default {
             dinnerArray : [{id:1, isEaten: false, date : '2022-10-17'},{id:2, isEaten: false, date : '2022-10-17'},
             {id:3, isEaten: false, date : '2022-10-17'},{id:4, isEaten: true, date : '2022-10-17'},{id:5, isEaten: true, date : '2022-10-17'},
             {id:6, isEaten: false, date : '2022-10-17'},{id:7, isEaten: true, date : '2022-10-17'}],
+
+            menuItems: [
+                { title: '카메라/갤러리', component : "MobileRegister" },
+                { title: '텍스트', component : "TextRegister" },
+            ],
         }
     },
 
     methods : {
 
-        
-        goMealRegister(date){
+        goImageRegister(component, date, meal){
             this.$router.push(
             {
-                name : "ImageRegister",
+                name : component,
                 params : {
                     initDate : date,
-                    initMeal : '아침',
+                    initMeal : meal,
                     initFoods : [{
                         id : 0,
                         name : '김치찌개',

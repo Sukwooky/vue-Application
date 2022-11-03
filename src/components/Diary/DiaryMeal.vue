@@ -4,14 +4,28 @@
         <!--식사기록 제목 및 식사 등록 버튼-->
         <div class="my-3">
             <v-row>
+                
+                <!--식사기록 제목-->
                 <v-col cols="auto">
                     <h3>식사 기록</h3>
                 </v-col>
                 <v-spacer></v-spacer>
+
+                <!--식사등록 버튼-->
                 <v-col cols="auto">
-                    <v-btn dark color="blue" outlined fab @click="goMealRegister">
-                      <v-icon dark>mdi-plus</v-icon>
-                    </v-btn>
+                    <v-menu bottom origin="center center" transition="scale-transition">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn dark color="blue" outlined fab v-bind="attrs" v-on="on">
+                                <v-icon dark>mdi-plus</v-icon>
+                          </v-btn>
+                        </template>
+
+                        <v-list>
+                          <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component)">
+                            <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </v-col>
             </v-row>
         </div>
@@ -104,7 +118,12 @@ export default {
                 { idx: 0, imgUrl:'jjigae.jpg', kcal: 40}
             ],
 
-            recommendKcal : 200     
+            recommendKcal : 200,
+            
+            menuItems: [
+                { title: '카메라/갤러리', component : "MobileRegister" },
+                { title: '텍스트', component : "TextRegister" },
+            ],
         }
     },
 
@@ -113,10 +132,10 @@ export default {
             console.log("ㅎㅇ")
         },
 
-        goMealRegister(){
+        goImageRegister(component){
             this.$router.push(
             {
-                name : "ImageRegister",
+                name : component,
                 params : {
                     initDate : this.date,
                     initMeal : '아침',
