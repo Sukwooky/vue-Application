@@ -35,64 +35,75 @@ export default {
     props: {
         foods : {
             type : Array,
-            default : () => [{
-                id : 0,
-                name : '김치찌개',
-                imgURL : 'jjigae.jpg',
-                kcal : 300,
-                nutrient : {
-                  carbo : 50,
-                  protein : 30,
-                  fat : 9,
-                }
-            }],
         },
 
         foodsKcal : {
             type : Number,
-            default : 100,
         }
     },
 
     computed : {
 
         all(){
-            let carbo_sum = 0
-            for(let i=0; i< this.foods.length; i++){
-                carbo_sum += this.foods[i].nutrient.carbo;
-            } 
+            let carbo_sum = 0;
+            let protein_sum = 0;
+            let fat_sum = 0;    
 
-            let protein_sum = 0
-            for(let i=0; i< this.foods.length; i++){
-                protein_sum += this.foods[i].nutrient.protein;
-            } 
+            if(Array.isArray(this.foods) && this.foods.length === 0){
+                //
+            }else{
+                for(let i=0; i< this.foods.length; i++){
+                    carbo_sum += this.foods[i].nutrient.carbo;
+                } 
 
-            let fat_sum = 0
-            for(let i=0; i< this.foods.length; i++){
-                fat_sum += this.foods[i].nutrient.fat;
-            } 
-            return carbo_sum + protein_sum + fat_sum
+                for(let i=0; i< this.foods.length; i++){
+                    protein_sum += this.foods[i].nutrient.protein;
+                } 
+
+                for(let i=0; i< this.foods.length; i++){
+                    fat_sum += this.foods[i].nutrient.fat;
+                }                 
+            }
+
+            return carbo_sum + protein_sum + fat_sum;
         },
         allCarbo(){
-            let sum = 0
-            for(let i=0; i< this.foods.length; i++){
-                sum += this.foods[i].nutrient.carbo;
-            } 
-            return sum
+            let sum = 0;
+
+            if(Array.isArray(this.foods) && this.foods.length === 0){
+                //
+            }else{
+                for(let i=0; i< this.foods.length; i++){
+                    sum += this.foods[i].nutrient.carbo;
+                } 
+            }
+            
+            return sum;
         },
         allProtein(){
-            let sum = 0
-            for(let i=0; i< this.foods.length; i++){
-                sum += this.foods[i].nutrient.protein;
-            } 
-            return sum
+            let sum = 0;
+
+            if(Array.isArray(this.foods) && this.foods.length === 0){
+                //
+            }else{
+                for(let i=0; i< this.foods.length; i++){
+                    sum += this.foods[i].nutrient.protein;
+                } 
+            }
+
+            return sum;
         },
         allFat(){
-            let sum = 0
-            for(let i=0; i< this.foods.length; i++){
-                sum += this.foods[i].nutrient.fat;
-            } 
-            return sum
+            let sum = 0;
+            
+            if(Array.isArray(this.foods) && this.foods.length === 0){
+                //
+            }else{
+                for(let i=0; i< this.foods.length; i++){
+                    sum += this.foods[i].nutrient.fat;
+                } 
+            }
+            return sum;
         },
     }
 }

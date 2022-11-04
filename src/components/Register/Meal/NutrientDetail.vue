@@ -1,9 +1,9 @@
 <template>
-    <div v-if="foods.length !==0">
+    <div v-if="(Array.isArray(this.foods) && this.foods.length === 0) === false">
         <v-row align="center" justify="center">
             <v-col cols="auto">
                 <v-chip-group column mandatory v-model="activeFood" active-class="blue--text">
-                    <v-chip v-for="food in foods" :key="food.id" link filter>
+                    <v-chip v-for="(food,index) in foods" :key="index" link filter>
                         {{food.name}}
                     </v-chip>  
                 </v-chip-group>
@@ -52,22 +52,10 @@ export default {
     props: {
         foods : {
             type : Array,
-            default : () => [{
-                id : 0,
-                name : '김치찌개',
-                imgURL : 'jjigae.jpg',
-                kcal : 300,
-                nutrient : {
-                    carbo : 50,
-                    protein : 30,
-                    fat : 9,
-                }
-            }],
         },
 
         foodsKcal : {
             type : Number,
-            default : 300,
         }
     },
 

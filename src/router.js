@@ -132,7 +132,13 @@ const routes = [
         path: '/register/image',
         component : ImageRegisterLayout,
         children : [
-
+            {
+                name : "MobileRegister",
+                path : "mobile",
+                component : MobileRegister,
+                props : true   
+            },
+            
             {
                 name : "TextRegister",
                 path : "text",
@@ -140,12 +146,6 @@ const routes = [
                 props : true
             },
 
-            {
-                name : "MobileRegister",
-                path : "mobile",
-                component : MobileRegister,
-                props : true   
-            }
         ]
     }
 ];

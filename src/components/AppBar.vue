@@ -11,15 +11,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+//import { mapGetters } from 'vuex'
 
 export default {
   name : "AppBar",
-  computed : {
-    ...mapGetters({
-      loginName : 'getUserInfo_name'
-    })
+  //computed : {
+  //  ...mapGetters({
+  //    loginName : 'getUserInfo_name'
+  //  })
+  //}
+
+  data(){
+    return {
+      loginName : "정원석"
+    }
   }
+
 }
 </script>
 

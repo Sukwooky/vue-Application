@@ -135,38 +135,6 @@ export default {
                 params : {
                     initDate : date,
                     initMeal : meal,
-                    initFoods : [{
-                        id : 0,
-                        name : '김치찌개',
-                        imgURL : 'jjigae.jpg',
-                        kcal : 300,
-                        nutrient : {
-                          carbo : 50,
-                          protein : 30,
-                          fat : 9,
-                        }
-                    },{
-                        id : 1,
-                        name : '김밥',
-                        imgURL : 'jjigae.jpg',
-                        kcal : 200,
-                        nutrient : {
-                          carbo : 40,
-                          protein : 20,
-                          fat : 7,
-                        }
-                    },
-                    {
-                        id : 2,
-                        name : '떡볶이',
-                        imgURL : 'jjigae.jpg',
-                        kcal : 100,
-                        nutrient : {
-                          carbo : 30,
-                          protein : 10,
-                          fat : 5,
-                        }
-                    }] 
                 }
             });
         },

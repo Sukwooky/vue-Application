@@ -2,66 +2,76 @@
     <v-container fluid>
         
         <!--카메라,갤러리 제목-->
-        <v-card class="text-center">
-            <h1 class="text--primary font-weight-black">카메라 및 갤러리 등록</h1>
-        </v-card>
+        <div class="mb-5">
+            <div class="text-center mb-10">
+                <h1 class="text--primary font-weight-black">카메라 및 갤러리 등록</h1>
+            </div>
+            <div>
+            <div class="blue--text"><strong class="black--text">등록 날짜:</strong> {{this.date}}</div>
+            <div class="blue--text"><strong class="black--text">등록 종류:</strong> {{this.meal}}</div>
+            </div>
+        </div>
 
-        <!--카메라,갤러리 등록-->
-        <v-card>
-            <v-card-text class="text-center">
-                <ValidationObserver ref="observer" v-slot="{invalid}">
-                    <v-form @submit.prevent="submit">
-                        
-                        <v-card elevation="10" outlined>
-
-                            <!--음식 사진 제목-->
-                            <v-card-title class="text--primary font-weight-black">음식 사진</v-card-title>
-
-                            <!--음식 등록-->
-                            <v-card-text>
-                                <ValidationProvider :rules="{
-                                        required : true,
-                                        }" name="카메라/갤러리 사진" v-slot="{errors}">
-                                        <v-file-input type="file" accept="image/*"
-                                        v-model="img" label="카메라/갤러리 사진" :error-messages="errors"
-                                        outlined :show-size="1000"
-                                        prepend-icon="mdi-camera-burst" clearable counter color="blue"
-                                        @change="uploadAlbumFile">
-                                            <template v-slot:selection="{ text }">
-                                                <v-chip color="primary accent-4" dark label small>
-                                                  {{ text }}
-                                                </v-chip>
-                                            </template>
-                                        </v-file-input>
-                                </ValidationProvider>
-                            </v-card-text>
-
-                            <!--음식점 사진 확인-->
-                            <v-expansion-panels>
-                                <v-expansion-panel>
-                                    <v-expansion-panel-header>
-                                        올린 이미지 확인
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
+        <!--카메라,갤러리 등록, 등록 버튼-->
+        <div>
+            <v-row align="center" justify="center">
+                <v-col cols="12">
+                    
+                    <ValidationObserver ref="observer" v-slot="{invalid}">
+                        <v-form @submit.prevent="submit">
+                            <div>
+                                <!--음식 파일 등록-->
+                                <div class="mb-3">
+                                    <div class="text-center">
+                                        <h2 class="text--primary font-weight-black">음식 사진 불러오기(클릭)</h2>
+                                    </div>
+                                    <div>
+                                        <ValidationProvider :rules="{
+                                                required : true,
+                                                }" name="카메라/갤러리 사진" v-slot="{errors}">
+                                                <v-file-input type="file" accept="image/*"
+                                                v-model="img" label="카메라/갤러리 사진" :error-messages="errors"
+                                                outlined :show-size="1000"
+                                                prepend-icon="mdi-camera-burst" clearable counter color="blue"
+                                                @change="uploadAlbumFile">
+                                                    <template v-slot:selection="{ text }">
+                                                        <v-chip color="primary accent-4" dark label small>
+                                                          {{ text }}
+                                                        </v-chip>
+                                                    </template>
+                                                </v-file-input>
+                                        </ValidationProvider>
+                                    </div>
+                                </div>
+                                
+                                <!--음식 사진 확인-->
+                                <div>
+                                    <div class="text-center">
+                                        <h2 class="text--primary font-weight-black">음식 사진 확인</h2>
+                                    </div>
+                                
+                                    <div class="border-image">
                                         <v-img :src="cImg" @error="changeNotDefault"
                                         height="200px" contain/>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
-                        </v-card>
-                        
-                        <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid" >등록하기</v-btn>
-                    </v-form>
-                </ValidationObserver>
-            </v-card-text>
-        </v-card>
+                                    </div>
+                                </div>
+                                
+                                <!--등록 버튼-->
+                                <div>
+                                    <v-btn type="submit" block x-large rounded color="primary" class="mt-4" :disabled="invalid" >등록하기</v-btn>
+                                </div>
+                            </div>
+                        </v-form>
+                    </ValidationObserver>
 
+                </v-col>
+            </v-row>
+        </div>
     </v-container>
 </template>
 
 <script>
 import AWS from 'aws-sdk'
-import axios from 'axios'
 import {extend, ValidationObserver, ValidationProvider } from "vee-validate"
 import {required} from "vee-validate/dist/rules"
 extend('required', {
@@ -70,23 +80,47 @@ extend('required', {
 });
 
 export default {
+    name : "MobileRegister",
     components : {
         ValidationObserver,
         ValidationProvider
     },
 
+    created(){
+        const hasNotInitDate = !this.$route.params.initDate;
+        this.date = hasNotInitDate ? (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) : this.$route.params.initDate;
+
+        const hasNotInitMeal = !this.$route.params.initMeal;
+        this.meal = hasNotInitMeal ?  '아침' : this.$route.params.initMeal;
+    },
+
     data(){
         return {
+
+            //router params 관련
+            date : null,
+            meal : null,
+
+            //이미지 등록 전(이미지파일 관련)
             img : null,             //v-input 받아온 값
             imgURL : null,          //s3에 업로드되면 얻기, POST요청 (afas.jpg)
-            imgPreURL : null,       //s3에 업로드되면 얻기, v-img:src (~)
+            imgPreURL : null,       //s3에 업로드되면 얻기, v-img:src (http: ~~ /afas.jpg)
             isDefaultImage : true,
 
+            //이미지 등록 전(S3관련)
             bucketRegion : 'ap-northeast-2',
             IdentityPoolId : 'ap-northeast-2:d6a685e8-0da6-493d-bb54-d84abf3ab01c',
             href : 'https://dgucapstonepics.s3.ap-northeast-2.amazonaws.com/', 
             albumBucketName : 'dgucapstonepics', 
             albumName : 'food_album',
+
+            //이미지 등록 후(음식 관련)
+            foods : [
+                {name:'김치찌개', kcal:300, nutrient:{carbo:50,protein:30,fat:9,}},
+                {name:'김밥', kcal:200, nutrient:{carbo:10,protein:10,fat:6,}},
+                {name:'꽁치', kcal:100, nutrient:{carbo:20,protein:10,fat:7,}},
+                {name:'공기밥', kcal:400, nutrient:{carbo:30,protein:5,fat:8,}},
+            ],
         }
     },
 
@@ -106,22 +140,16 @@ export default {
             // 입력조건 유효성 결과 만족시
             if (result){
 
-                // 음식점 정보
-                const _info = {
-                    Name : this.Name,
-                    imgURL : this.imgURL,
-                    Location : this.Location,
-                    Menu : this.Menu
-                };
-
-                await axios.post('/api//register', _info)
-                    .then(res => {
-                        console.log(res.data.success, res.data.message);
-                        //this.$router.push('/')
-                    })
-                    .catch(err =>{
-                        console.log(err.message)
-                    })
+                //MealRegister
+                this.$router.push({
+                name : "MealRegister",
+                params : {
+                    initImgPreURL : this.imgPreURL,
+                    initDate : this.date,
+                    initMeal : this.meal,
+                    initFoods : this.foods,
+                }
+            });
             }
         },
 
@@ -206,6 +234,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.border-image{
+  border : 3px solid ;
+}
 </style>

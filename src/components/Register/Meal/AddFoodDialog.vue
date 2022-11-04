@@ -85,26 +85,24 @@ extend('isfood', async (value) => {
 });
 
 export default {
-    name : "TextRegister",
+    name : "AddFoodDialog",
     components : {
         ValidationObserver,
         ValidationProvider
     },
 
-    created(){
-        const hasNotInitDate = !this.$route.params.initDate;
-        this.date = hasNotInitDate ? (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) : this.$route.params.initDate;
+    props : {
+        date : {
+            type : String
+        },
 
-        const hasNotInitMeal = !this.$route.params.initMeal;
-        this.meal = hasNotInitMeal ?  '아침' : this.$route.params.initMeal;
+        meal : {
+            type : String
+        }
     },
 
     data(){
         return {
-
-            //router params 관련
-            date : null,
-            meal : null,
 
             //음식 관련
             food : null,
@@ -124,20 +122,11 @@ export default {
                     .then((res) => {
                         console.log(res.data.food);
                         if(res.data.isSuccess === true){
-                            let foods = [];
+
                             let foodObject = res.data.food
-                            foods.push(foodObject);
+                            this.$emit("add-food", foodObject);
+                            this.food = null;
                             
-                            //MealRegister
-                            this.$router.push({
-                            name : "MealRegister",
-                            params : {
-                                initImgPreURL : null,
-                                initDate : this.date,
-                                initMeal : this.meal,
-                                initFoods : foods,
-                                }
-                            });
                         }else{
                             //이미 validate로 판별함 -> 일어날수가 x
                         }

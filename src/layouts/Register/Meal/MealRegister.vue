@@ -23,9 +23,24 @@
           
         <!--등록할 음식 버튼-->
         <v-col cols="auto">
-          <v-btn dark color="blue" outlined fab small> 
-            <v-icon dark>mdi-plus</v-icon>
-          </v-btn>
+          <v-dialog v-model="addDialog" scrollable max-width="300px">
+              
+              <!--Dialog 유발-->
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn v-bind="attrs" v-on="on"  
+                dark color="blue" outlined fab small> 
+                  <v-icon dark>mdi-plus</v-icon>
+                </v-btn>
+              </template>
+              
+              <!--Dialog 내용-->
+              <v-card class="text-center">
+                <v-card-text>
+                  <AddFoodDialog :date="date" :meal="meal" v-on:add-food="addFood"/>
+                </v-card-text>
+              </v-card>
+
+          </v-dialog>
         </v-col>
       </v-row>
     </div>
@@ -119,14 +134,14 @@
                 
                 <v-card-text class="justify-center" style="height: 300px;">
                     <!--Tab 선택-->
-                    <v-tabs v-model="nutrientTab" background-color="transparent" color="blue" grow>
+                    <v-tabs v-model="nutrientTabModel" background-color="transparent" color="blue" grow>
                       <v-tab v-for="tabItem in nutrientTabItems" :key="tabItem.tabIdx">
                         {{ tabItem.tabName }}
                       </v-tab>
                     </v-tabs>
 
                     <!--Tab 선택시 내용-->
-                    <v-tabs-items v-model="nutrientTab" class="mt-5">
+                    <v-tabs-items v-model="nutrientTabModel" class="mt-5">
                       <v-tab-item v-for="tabItem in nutrientTabItems" :key="tabItem.tabIdx">
                         <div v-if="tabItem.tabIdx === 0">
                           <NutrientSum :foods="foods" :foodsKcal="foodsKcal"/>
@@ -151,8 +166,8 @@
       
       <!--등록할 음식들-->
       <v-row align="center" justify="center">
-        <v-col cols="auto" v-for="food in foods" :key="food.id">
-            <v-chip link close @click:close="deleteFood(food.id)">{{food.name}}</v-chip>
+        <v-col cols="auto" v-for="(food,index) in foods" :key="index">
+            <v-chip link close @click:close="deleteFood(index)">{{food.name}}</v-chip>
         </v-col>
       </v-row>
     </div>
@@ -173,14 +188,14 @@
       <v-card class="border" tile>
         <v-list>
           <v-list-item-group v-model="inputModel" mandatory color="blue">
-            <v-list-item v-for="(item, i) in inputItems " :key="i" class="mb-2 rounded-pill">
+            <v-list-item v-for="(inputItem) in inputItems " :key="inputItem.inputIdx" class="mb-2 rounded-pill">
                                             
                 <v-list-item-title>
-                  <div class="text--primary font-weight-bold mb-2">{{item.title}}</div>
+                  <div class="text--primary mb-2">{{inputItem.title}}</div>
                 </v-list-item-title>
                
                 <v-list-item-icon>
-                    {{ratioFoodsKcal(item.ratio)}}kcal
+                    {{ratioFoodsKcal(inputItem.ratio)}}kcal
                 </v-list-item-icon>  
                    
             </v-list-item>
@@ -199,13 +214,13 @@
         <!--Dialog 내용-->
           <v-card>
             <v-card-title class="justify-center error white--text">
-              <v-icon>mdi-alert-decagram</v-icon>  주의  <v-icon>mdi-alert-decagram</v-icon>
+              <v-icon left>mdi-alert-decagram</v-icon>주의<v-icon right>mdi-alert-decagram</v-icon>
             </v-card-title>
             <v-card-text class="text-center">
-              <h2 class="pa-12">최소한 1개의 음식은 등록해주세요</h2>
+              <h2 class="pa-12">{{submitErrMsg}}</h2>
             </v-card-text>
             <v-card-actions class="justify-center">
-              <v-btn text @click="submitDialog = false">확인</v-btn>
+              <v-btn text @click="closeSubmitDialog()">확인</v-btn>
             </v-card-actions>
           </v-card>
       </v-dialog>
@@ -216,116 +231,154 @@
 
 <script>
 import axios from 'axios'
+const AddFoodDialog = () => import("@/components/Register/Meal/AddFoodDialog.vue");
 const NutrientSum = () => import("@/components/Register/Meal/NutrientSum.vue");
 const NutrientDetail = () => import("@/components/Register/Meal/NutrientDetail.vue");
 
 export default {
   
   name : 'MealRegister',
-  mounted(){
-    
-    //음식추가(카메라,갤러리,텍스트)를 통해 여기로 왔을떄 
-    
-    //1. 날짜 전달
-    //2. 아침/점심/저녁 전달
-    //3. 음식(kcal, 이름, 이미지URL, 영양소)전달
-
-  },
-
   components : {
+    "AddFoodDialog" : AddFoodDialog,
     "NutrientSum" : NutrientSum,
     "NutrientDetail" : NutrientDetail,
+  },
+
+  created(){
+    const hasNotInitImgPreURL = !this.$route.params.initImgPreURL;
+    this.imgPreURL = hasNotInitImgPreURL ? null : this.$route.params.initImgPreURL ;
+    if (!this.imgPreURL){
+      this.isDefaultImg = true;
+      this.imgURL = null;
+    }else{
+      this.isDefaultImg = false;
+      
+      const urlArr = this.imgPreURL.split('/');
+      this.imgURL = urlArr[urlArr.length - 1];
+    }
+    
+    const hasNotInitDate = !this.$route.params.initDate;
+    this.date = hasNotInitDate ? (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) : this.$route.params.initDate;
+
+    const hasNotInitMeal = !this.$route.params.initMeal;
+    this.meal = hasNotInitMeal ?  '아침' : this.$route.params.initMeal;
+
+    const hasNotInitFoods = !this.$route.params.initFoods;
+    this.foods = hasNotInitFoods ? [] : this.$route.params.initFoods; 
 
   },
 
   data(){
     return {
       
-      //날짜선택, 식사 선택(아침/점심/저녁)
-      date : this.$route.params.initDate,
+      //router params 관련
+      date : null,
       dateDialog : false,
 
-      meal : this.$route.params.initMeal,
+      meal : null,
       mealDialog : false,
 
-      //영양정보 확인, 등록할 음식들
-      nutrientTab: null,
+      foods : null,
+
+      isDefaultImg : true,
+      imgURL : null,       //s3에 업로드되면 얻기, POST요청 (afas.jpg)
+      imgPreURL : null,    //s3에 업로드되면 얻기, v-img:src (http: ~~ /afas.jpg)
+
+      //음식추가시 Dialog 관련
+      addDialog : false,
+
+
+      //전체,상세 영양정보 Dialog, Tab 관련
+      nutrientDialog : false,
+      nutrientTabModel: 0,
       nutrientTabItems : [
         {tabIdx: 0, tabName : '영양정보 전체'},
         {tabIdx: 1, tabName : '영양정보 상세'},
       ],
-      nutrientDialog : false,
 
-      foods : this.$route.params.initFoods,
-      
-      //입력
+      //비율 Item 관련
       inputModel : 3,
       inputItems : [
-        { title: '1/4소접시', ratio : 0.25},
-        { title: '1/2소접시', ratio : 0.5},
-        { title: '3/4소접시', ratio : 0.75},
-        { title: '1소접시', ratio : 1},
-        { title: '2소접시', ratio : 2},
+        { inputIdx: 0, title: '1/4소접시', ratio : 0.25},
+        { inputIdx: 1, title: '1/2소접시', ratio : 0.5},
+        { inputIdx: 2, title: '3/4소접시', ratio : 0.75},
+        { inputIdx: 3, title: '1소접시', ratio : 1},
+        { inputIdx: 4, title: '2소접시', ratio : 2},
       ],
 
-      //제출
+      //음식등록시 Dialog 관련 
       submitDialog : false,
-
-      //이미지 관련
-      default_img : true,
-      rtrimgURL : null,       //s3에 업로드되면 얻기, POST요청 (afas.jpg)
-      rtrimgPreURL : null,    //s3에 업로드되면 얻기, v-img:src (~)
+      submitErrMsg : "",
     }
   },
 
   computed : {
       
-      //default_img = true -> defaultimg
-      //default_img = false -> rtrimgPreURL
+      //isDefaultImg = true -> defaultimg
+      //isDefaultImg = false -> imgPreURL
       cImg(){
-          return this.default_img ? require('@/assets/default.png') : this.rtrimgPreURL;
+          return this.isDefaultImg ? require('@/assets/default.png') : this.imgPreURL;
       },
 
       foodsKcal(){
-        let sum_kcal = 0
-        for(let i=0; i< this.foods.length; i++){
-          sum_kcal += this.foods[i].kcal;
-        } 
+        let sum_kcal = 0;
+
+        if(Array.isArray(this.foods) && this.foods.length === 0){
+          //
+        }else{
+          for(let i=0; i< this.foods.length; i++){
+              sum_kcal += this.foods[i].kcal;
+          } 
+        }
+        
         return sum_kcal
       },
 
       ratioFoodsKcal(){
         return (ratio) => {
           let sum_kcal = 0
-          for(let i=0; i< this.foods.length; i++){
-            sum_kcal += this.foods[i].kcal;
-          } 
+          
+          if(Array.isArray(this.foods) && this.foods.length === 0){
+            //
+          }else{
+            for(let i=0; i< this.foods.length; i++){
+                sum_kcal += this.foods[i].kcal;
+            } 
+          }
           return ratio * sum_kcal;
         }
-      }
-      
+      },
   },
 
   methods : {
       
-      //default_img = true -> false
+      //isDefaultImg = true -> false
       changeNotDefault(){
-          this.default_img = false;
+        this.isDefaultImg = false;
+      },
+
+      addFood(foodObject){
+        this.foods.push(foodObject);
+        this.addDialog = false;
       },
 
       deleteFood(id){
-        this.foods.pop(id)
+        this.foods.splice(id,1);
       },
 
       async submit(){
-        
-        //섭취 음식 다 지웠을때X
-        if (this.foods.length !== 0){
+
+          if(Array.isArray(this.foods) && this.foods.length === 0){
+              this.submitDialog = true;
+              this.submitErrMsg = "최소한 1개의 음식은 등록해주세요"
+          }
+          else{
             
             // 섭취 음식 등록 정보
             const foodObj = {
                 date : this.date,
                 meal : this.meal,
+                imgURL : this.imgURL,
                 foods : this.foods,
                 ratio : this.inputItems[this.inputModel].ratio
             };
@@ -334,9 +387,7 @@ export default {
             await axios.post('/api/foods/join', foodObj)
               .then(res => {
                   if (res.data.isSuccess === true){
-
                       console.log(res.data)
-                      //this.$router.push('/authentication/sign-in')
                   }else{
                       console.log(res.data)
                   }
@@ -344,14 +395,13 @@ export default {
               .catch(err =>{
                   console.log(err.message)
               })
+          }
+      },
 
-        }
-        //섭취 음식 다 지웠을때O    
-        else{        
-          this.submitDialog = true;
-        }
-
-      }
+      closeSubmitDialog(){
+        this.submitDialog = false;
+        this.submitErrMsg = "";
+      },
   }
 }
 </script>
@@ -359,10 +409,8 @@ export default {
 .border {
   border: 2px dashed;
   border-color: #80CAFF;
-
 }
 .border-image{
   border : 3px solid ;
 }
-
 </style>

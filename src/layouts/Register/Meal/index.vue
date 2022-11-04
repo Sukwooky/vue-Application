@@ -23,9 +23,7 @@ export default {
     name : 'RegisterMealPage',
     data () {
       return {
-
         drawer : false,
-
       }
     },
 
