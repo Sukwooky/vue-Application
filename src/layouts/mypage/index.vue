@@ -13,7 +13,7 @@
       
     </v-main>
     
-    <DefaultBottomNavigation/>
+    <MyPageBottomNavigation/>
 
   </v-app>
 
@@ -22,7 +22,7 @@
 <script>
 const DefaultBar = () => import("@/components/AppBar.vue");
 const DefaultNavigationDrawer = () => import("@/components/AppNavigationDrawer.vue");
-const DefaultBottomNavigation = () => import("@/components/AppBottomNavigation.vue");
+const MyPageBottomNavigation = () => import("@/components/MyPageBottomNavigation.vue");
 
 export default {
     name : "MyPageLayout",
@@ -37,7 +37,7 @@ export default {
     components : {
       "DefaultBar" : DefaultBar,
       "DefaultNavigationDrawer" : DefaultNavigationDrawer,
-      "DefaultBottomNavigation" : DefaultBottomNavigation,
+      "MyPageBottomNavigation" : MyPageBottomNavigation,
     }
 }
 </script>
