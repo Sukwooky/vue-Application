@@ -20,8 +20,6 @@ jobs:
       - name: Npm install
         run: npm install
         
-      - name : npm serve
-        run : npm run serve
 
       - name: Build
         run: npm run build
