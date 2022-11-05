@@ -15,10 +15,14 @@
             <v-col cols="auto">
                 <div>아침</div>
             </v-col>
-            <v-col cols="auto" v-for="food in this.breakFastArray" :key="food.id">
+            <v-col cols="auto" v-for="(food,index) in this.breakFastArray" :key="`food-${index}`">
+
+                <!--등록 O-->
                 <v-btn v-if="food.isEaten" icon color="red" x-small>
                   <v-icon>mdi-checkbox-marked</v-icon>
                 </v-btn>
+                
+                <!--등록 X-->
                 <v-menu v-else bottom origin="center center" transition="scale-transition">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn icon color="blue" x-small v-bind="attrs" v-on="on">
@@ -27,7 +31,7 @@
                     </template>
                     
                     <v-list>
-                      <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component, food.date, '아침')">
+                      <v-list-item v-for="(menuItem) in menuItems" :key="menuItem.menuIdx" @click="goImageRegister(menuItem.component, food.date, '아침')">
                         <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -40,10 +44,14 @@
             <v-col cols="auto">
                 <div>점심</div>
             </v-col>
-            <v-col cols="auto" v-for="food in this.lunchArray" :key="food.id">
+            <v-col cols="auto" v-for="(food,index) in this.lunchArray" :key="`food-${index}`">
+                
+                <!--등록 O-->
                 <v-btn v-if="food.isEaten" icon color="red" x-small>
                   <v-icon>mdi-checkbox-marked</v-icon>
                 </v-btn>
+                
+                <!--등록 X-->
                 <v-menu v-else bottom origin="center center" transition="scale-transition">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn icon color="blue" x-small v-bind="attrs" v-on="on">
@@ -52,7 +60,7 @@
                     </template>
                     
                     <v-list>
-                      <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component, food.date, '점심')">
+                      <v-list-item v-for="(menuItem) in menuItems" :key="menuItem.menuIdx" @click="goImageRegister(menuItem.component, food.date, '점심')">
                         <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -65,10 +73,14 @@
             <v-col cols="auto">
                 <div>저녁</div>
             </v-col>
-            <v-col cols="auto" v-for="food in this.dinnerArray" :key="food.id">
+            <v-col cols="auto" v-for="(food,index) in this.dinnerArray" :key="`food-${index}`">
+                
+                <!--등록 O-->
                 <v-btn v-if="food.isEaten" icon color="red" x-small>
                   <v-icon>mdi-checkbox-marked</v-icon>
                 </v-btn>
+                
+                <!--등록 X-->
                 <v-menu v-else bottom origin="center center" transition="scale-transition">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn icon color="blue" x-small v-bind="attrs" v-on="on">
@@ -77,7 +89,7 @@
                     </template>
                     
                     <v-list>
-                      <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component, food.date, '저녁')">
+                      <v-list-item v-for="(menuItem) in menuItems" :key="menuItem.menuIdx" @click="goImageRegister(menuItem.component, food.date, '저녁')">
                         <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -120,8 +132,8 @@ export default {
             {id:6, isEaten: false, date : '2022-10-17'},{id:7, isEaten: true, date : '2022-10-17'}],
 
             menuItems: [
-                { title: '카메라/갤러리', component : "MobileRegister" },
-                { title: '텍스트', component : "TextRegister" },
+                { menuIdx:0, title: '카메라/갤러리', component : "MobileRegister" },
+                { menuIdx:1, title: '텍스트', component : "TextRegister" },
             ],
         }
     },

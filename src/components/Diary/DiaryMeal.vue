@@ -21,7 +21,7 @@
                         </template>
 
                         <v-list>
-                          <v-list-item v-for="(menuItem, i) in menuItems" :key="i" @click="goImageRegister(menuItem.component)">
+                          <v-list-item v-for="(menuItem) in menuItems" :key="menuItem.menuIdx" @click="goImageRegister(menuItem.component)">
                             <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
                           </v-list-item>
                         </v-list>
@@ -37,8 +37,8 @@
         <div>
             <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
              :gap="3" :slide-ratio="1 / 4" :dragging-distance="200" :visibleSlides="4">
-                <vueper-slide v-for="food in breakfastArray" :key="food.id" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
-                :style="'color : white'" @click.native="slideClick()"/>  
+                <vueper-slide v-for="(food,index) in breakfastArray" :key="`food-${index}`" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
+                :style="'color : white'" @click.native="slideClick(food)"/>  
             </vueper-slides>  
         </div>
 
@@ -49,8 +49,8 @@
         <div>
             <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
              :gap="3" :slide-ratio="1 / 4" :dragging-distance="200" :visibleSlides="4">
-                <vueper-slide v-for="food in lunchArray" :key="food.id" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
-                :style="'color : white'" @click.native="slideClick()"/>  
+                <vueper-slide v-for="(food,index) in lunchArray" :key="`food-${index}`" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
+                :style="'color : white'" @click.native="slideClick(food)"/>  
             </vueper-slides>  
         </div>
 
@@ -61,8 +61,8 @@
         <div>
             <vueper-slides class="no-shadow" slide-multiple :bullets= "false" :arrows= "false"
              :gap="3" :slide-ratio="1 / 4" :dragging-distance="200" :visibleSlides="4">
-                <vueper-slide v-for="food in dinnerArray" :key="food.id" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
-                :style="'color : white'" @click.native="slideClick()"/>  
+                <vueper-slide v-for="(food,index) in dinnerArray" :key="`food-${index}`" :image="require(`@/assets/${food.imgUrl}`)" :title="`${food.kcal}kcal`" 
+                :style="'color : white'" @click.native="slideClick(food)"/>  
             </vueper-slides>  
         </div>
     </div>
@@ -121,15 +121,15 @@ export default {
             recommendKcal : 200,
             
             menuItems: [
-                { title: '카메라/갤러리', component : "MobileRegister" },
-                { title: '텍스트', component : "TextRegister" },
+                {menuIdx: 0, title: '카메라/갤러리', component : "MobileRegister" },
+                {menuIdx: 1, title: '텍스트', component : "TextRegister" },
             ],
         }
     },
 
     methods : {
-        slideClick(){
-            console.log("ㅎㅇ")
+        slideClick(food){
+            console.log("ㅎㅇ", food);
         },
 
         goImageRegister(component){

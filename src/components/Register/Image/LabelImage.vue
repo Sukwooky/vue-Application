@@ -5,7 +5,7 @@
         <v-img :src="cLabelImg" height="200px" contain 
          class="container">
 
-            <div v-for="(food,index) in activeFoods" :key="index"
+            <div v-for="(food,index) in activeFoods" :key="`food-${index}`"
             class="label-block label-border"
             :style="{
             'top': `${food.ymain}%`, 'left': `${food.xmain}%`

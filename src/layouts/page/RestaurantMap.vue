@@ -43,7 +43,7 @@
         <!--음식점 정보-->
         <v-card>
             <v-row class="ma-3">
-                <v-col v-for="rtr,i in this.restaurants" :key="i" cols="12" sm="6" md="4" lg="3"
+                <v-col v-for="(rtr,i) in this.restaurants" :key="`rtr-${i}`" cols="12" sm="6" md="4" lg="3"
                 @click="showOnMap(rtr)" :class="{active : rtr === activeRestaurant }" class="restaurant" >
                     <RestaurantVue v-bind:rtr="rtr" ></RestaurantVue>
                 </v-col>

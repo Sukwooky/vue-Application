@@ -9,7 +9,7 @@
               <v-card-text class="pa-4 text--primary font-weight-black text-center">당신의 성별은 무엇인가요?</v-card-text>
                   <v-list>
                       <v-list-item-group v-model="GenderModel" mandatory color="blue">
-                        <v-list-item v-for="(item, i) in GenderItems " :key="i" class="mb-1 rounded-pill">
+                        <v-list-item v-for="(item) in GenderItems " :key="item.genderItemIdx" class="mb-1 rounded-pill">
 
                           <v-list-item-icon>
                             <v-icon>{{item.icon}}</v-icon>
@@ -100,8 +100,8 @@ export default {
         return {
             
             GenderItems : [
-              { title: '남자', icon: 'mdi-human-male' },
-              { title: '여자', icon: 'mdi-human-female' },
+              { genderItemIdx: 0, title: '남자', icon: 'mdi-human-male' },
+              { genderItemIdx: 1, title: '여자', icon: 'mdi-human-female' },
             ],
 
             backURL : "/authentication/info-first",
