@@ -53,22 +53,27 @@ const routes = [
     },
 
     {
+        name : "authentication",
         path: "/authentication",
         component : AuthenticationLayout,
         children : [
             {
+                name : 'info-first',
                 path : 'info-first',
                 component : InfoFist
             },
             {  
+                name : 'info-second',
                 path : 'info-second',
                 component : InfoSecond,
             },
             {
+                name : 'info-sign-up',
                 path : 'info-sign-up',
                 component : InfoSignUp
             },
             {
+                name : 'sign-in',
                 path : "sign-in",
                 component : SignIn
             },
