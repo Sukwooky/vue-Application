@@ -136,10 +136,21 @@ export default {
       ValidationProvider,
     },
 
+    created(){
+      const hasNotInitDate = !this.$route.params.initDate;
+      this.date = hasNotInitDate ? (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10) : this.$route.params.initDate;
+    },
+
+    mounted () {
+      this.dateArrayEvents = ['2022-11-21', '2022-11-22'];
+      this.maxWeight = 70
+      this.minWeight = 50
+    },
+
     data(){
         return {
-            dateArrayEvents : this.$route.params.initDateArrayEvents,
-            date : this.$route.params.initDate,
+            dateArrayEvents : null,
+            date : null,
             dateDialog: false,
 
             weight : null,
@@ -167,11 +178,6 @@ export default {
           return false
         }
       }
-    },
-
-    mounted () {
-      this.maxWeight = 70
-      this.minWeight = 50
     },
 
     methods : {
