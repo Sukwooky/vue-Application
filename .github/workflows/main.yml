@@ -11,13 +11,21 @@ jobs:
     steps:
       - name: git clone
         uses : actions/checkout@v2
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@main
+        with:
+          node-version: 14.x
       
       - name: Npm install
         run: npm install
+        
+      - name : npm serve
+        run : npm run serve
 
       - name: Build
         run: npm run build
-
+        
       - name: Transfer to S3 for serving static
         env:
           AWS_ACCESS_KEY_ID: '${{ secrets.AWS_ACCESS_KEY_ID }}'
