@@ -1,5 +1,5 @@
 <template>
-      <!--    <v-app-bar v-if="$vuetify.breakpoint.xsOnly"> -->
+      <!--  <v-app-bar v-if="$vuetify.breakpoint.xsOnly"> -->
     <v-app-bar color="blue" dark app>
       <v-app-bar-nav-icon @click="$emit('drawer')"></v-app-bar-nav-icon>
       <v-toolbar-title>
@@ -11,21 +11,16 @@
 </template>
 
 <script>
-//import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name : "AppBar",
-  //computed : {
-  //  ...mapGetters({
-  //    loginName : 'getUserInfo_name'
-  //  })
-  //}
+  computed : {
+    ...mapGetters({
+      loginName : 'getUserInfo_name'
+    })
+  },
 
-  data(){
-    return {
-      loginName : "정원석"
-    }
-  }
 
 }
 </script>

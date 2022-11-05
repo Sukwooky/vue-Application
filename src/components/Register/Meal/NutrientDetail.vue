@@ -3,7 +3,7 @@
         <v-row align="center" justify="center">
             <v-col cols="auto">
                 <v-chip-group column mandatory v-model="activeFood" active-class="blue--text">
-                    <v-chip v-for="(food,index) in foods" :key="index" link filter>
+                    <v-chip v-for="(food,index) in foods" :key="`food-${index}`" link filter>
                         {{food.name}}
                     </v-chip>  
                 </v-chip-group>

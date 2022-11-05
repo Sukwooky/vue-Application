@@ -55,6 +55,14 @@
                                         height="200px" contain/>
                                     </div>
                                 </div>
+                                <!--음식 라벨링 사진 확인-->
+                                <div>
+                                    <div class="text-center">
+                                        <h2 class="text--primary font-weight-black">분석된 음식 사진 확인</h2>
+                                    </div>
+                                
+                                    <LabelImage :foods="foods" :isDefaultLabelImage="isDefaultLabelImage" :labelImgPreURL="labelImgPreURL"/>
+                                </div>
                                 
                                 <!--등록 버튼-->
                                 <div>
@@ -71,6 +79,8 @@
 </template>
 
 <script>
+const LabelImage = () => import("@/components/Register/Image/LabelImage.vue");
+
 import AWS from 'aws-sdk'
 import {extend, ValidationObserver, ValidationProvider } from "vee-validate"
 import {required} from "vee-validate/dist/rules"
@@ -83,7 +93,8 @@ export default {
     name : "MobileRegister",
     components : {
         ValidationObserver,
-        ValidationProvider
+        ValidationProvider,
+        LabelImage,
     },
 
     created(){
@@ -107,6 +118,10 @@ export default {
             imgPreURL : null,       //s3에 업로드되면 얻기, v-img:src (http: ~~ /afas.jpg)
             isDefaultImage : true,
 
+            //분석된 이미지 등록 전(이미지파일 관련)
+            labelImgPreURL : null,
+            isDefaultLabelImage : true,
+
             //이미지 등록 전(S3관련)
             bucketRegion : 'ap-northeast-2',
             IdentityPoolId : 'ap-northeast-2:d6a685e8-0da6-493d-bb54-d84abf3ab01c',
@@ -116,10 +131,10 @@ export default {
 
             //이미지 등록 후(음식 관련)
             foods : [
-                {name:'김치찌개', kcal:300, nutrient:{carbo:50,protein:30,fat:9,}},
-                {name:'김밥', kcal:200, nutrient:{carbo:10,protein:10,fat:6,}},
-                {name:'꽁치', kcal:100, nutrient:{carbo:20,protein:10,fat:7,}},
-                {name:'공기밥', kcal:400, nutrient:{carbo:30,protein:5,fat:8,}},
+                {xmain:10, ymain:10, name:'김치찌개', kcal:300, nutrient:{carbo:50,protein:30,fat:9,}},
+                {xmain:40, ymain:40, name:'김밥', kcal:200, nutrient:{carbo:10,protein:10,fat:6,}},
+                {xmain:70, ymain:70, name:'꽁치', kcal:100, nutrient:{carbo:20,protein:10,fat:7,}},
+                {xmain:10, ymain:20, name:'공기밥', kcal:400, nutrient:{carbo:30,protein:5,fat:8,}},
             ],
         }
     },
@@ -130,9 +145,25 @@ export default {
         cImg(){
             return this.isDefaultImage ? require('@/assets/default.png') : this.imgPreURL;
         },
+
+        cLabelImg(){
+            return this.isDefaultLabelImage ? require('@/assets/default.png') : this.labelImgPreURL;
+        }
     },
 
     methods : {
+
+        //isDefaultImage = true -> false
+        changeNotDefault(){
+            console.log('발생함?')
+            this.isDefaultImage = false;
+        },
+
+        //isDefaultLabelImage = true -> false
+        changeNotDefaultLabel(){
+            this.isDefaultLabelImage = false;
+        },
+
         async submit(){
             // 입력조건 유효성 결과
             const result = await this.$refs.observer.validate()
@@ -142,20 +173,15 @@ export default {
 
                 //MealRegister
                 this.$router.push({
-                name : "MealRegister",
-                params : {
-                    initImgPreURL : this.imgPreURL,
-                    initDate : this.date,
-                    initMeal : this.meal,
-                    initFoods : this.foods,
-                }
-            });
+                    name : "MealRegister",
+                    params : {
+                        initImgPreURL : this.imgPreURL,
+                        initDate : this.date,
+                        initMeal : this.meal,
+                        initFoods : this.foods,
+                    }
+                });
             }
-        },
-
-        //isDefaultImage = true -> false
-        changeNotDefault(){
-            this.isDefaultImage = false;
         },
 
         connectAWS(){
@@ -180,13 +206,19 @@ export default {
             this.connectAWS();
 
             //img 지울때 / 추가할때
-            if (this.img === null){
+            if (!this.img){
                 
-                this.img = null
-                this.imgURL = null
+                //일반 이미지
+                this.img = null;
+                this.imgURL = null;
                 
                 this.imgPreURL = null;
                 this.isDefaultImage = true;
+
+                //분석된 이미지
+                this.labelImgPreURL = null;
+                this.isDefaultLabelImage = true;
+
             }else{
                 
                 //2. AWS 버킷에 업로드(1) 
@@ -214,14 +246,17 @@ export default {
                 var promise = upload.promise();
                 promise.then(
                     (data) => {
-                        console.log(`파일 업로드: ${data}`);
+                        console.log("파일 업로드:", data);
 
-                        //s3에 업로드되면 얻기, POST요청 (afas.jpg)
-                        //s3에 업로드되면 얻기, v-img:src (~)
+                        //이미지
                         this.imgURL = randomString + '.' + form;
                         
                         this.imgPreURL = this.href + this.albumName + '/' + randomString + '.' + form;
                         this.isDefaultImage = false;
+
+                        //분석된 이미지(여기서 axios.post 날려서 foods 할당)
+                        this.labelImgPreURL = this.href + this.albumName + '/' + randomString + '.' + form;
+                        this.isDefaultLabelImage = false;
 
                     },
                     (err) => {

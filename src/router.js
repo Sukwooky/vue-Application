@@ -26,12 +26,12 @@ const RestaurantList = () => import("@/layouts/Page/RestaurantList.vue")
 const Diary = () => import("@/layouts/MyPage/Diary/Diary.vue");
 const Report = () => import("@/layouts/MyPage/Report/Report.vue");
 
+//WeightRegisterLayout
+const WeightRegister = () => import("@/layouts/Register/Weight/WeightRegister.vue");
+
 //ImageRegisterLayout
 const MobileRegister = () =>import("@/layouts/Register/Image/MobileRegister.vue");
 const TextRegister = () => import("@/layouts/Register/Image/TextRegister.vue");
-
-//WeightRegisterLayout
-const WeightRegister = () => import("@/layouts/Register/Weight/WeightRegister.vue");
 
 //MealRegisterLayout
 const MealRegister = () => import("@/layouts/Register/Meal/MealRegister.vue");

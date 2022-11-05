@@ -130,12 +130,12 @@ export default {
                             
                             //MealRegister
                             this.$router.push({
-                            name : "MealRegister",
-                            params : {
-                                initImgPreURL : null,
-                                initDate : this.date,
-                                initMeal : this.meal,
-                                initFoods : foods,
+                                name : "MealRegister",
+                                params : {
+                                    initImgPreURL : null,
+                                    initDate : this.date,
+                                    initMeal : this.meal,
+                                    initFoods : foods,
                                 }
                             });
                         }else{

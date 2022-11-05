@@ -3,11 +3,9 @@
   <v-container fluid>
 
     <!--1. 카메라/갤러리/텍스트 이미지(분석됨) 보기-->
-    <div class="mb-5 border-image">
-      <v-img :src="cImg" @error="changeNotDefault" 
-      height="200px" contain/>
-    </div>
-
+    <LabelImage :foods="foods" :isDefaultLabelImage="isDefaultImg" :labelImgPreURL="imgPreURL"
+    class="mb-5"/>
+    
     <v-divider></v-divider>
 
     <!--2. 전체 섭취량, 등록할 음식 버튼-->
@@ -166,7 +164,7 @@
       
       <!--등록할 음식들-->
       <v-row align="center" justify="center">
-        <v-col cols="auto" v-for="(food,index) in foods" :key="index">
+        <v-col cols="auto" v-for="(food,index) in foods" :key="`food-${index}`">
             <v-chip link close @click:close="deleteFood(index)">{{food.name}}</v-chip>
         </v-col>
       </v-row>
@@ -230,15 +228,18 @@
 </template>
 
 <script>
-import axios from 'axios'
+const LabelImage = () => import("@/components/Register/Image/LabelImage.vue");
 const AddFoodDialog = () => import("@/components/Register/Meal/AddFoodDialog.vue");
 const NutrientSum = () => import("@/components/Register/Meal/NutrientSum.vue");
 const NutrientDetail = () => import("@/components/Register/Meal/NutrientDetail.vue");
+
+import axios from 'axios'
 
 export default {
   
   name : 'MealRegister',
   components : {
+    "LabelImage" : LabelImage,
     "AddFoodDialog" : AddFoodDialog,
     "NutrientSum" : NutrientSum,
     "NutrientDetail" : NutrientDetail,
